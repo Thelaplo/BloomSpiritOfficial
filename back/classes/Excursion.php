@@ -13,7 +13,7 @@ class Excursion
     private string $difficulte;
     private int $nbLimitPers;
     private float $prix;
-    private TypeTransport $typeTransport;
+    private array $typeTransport;
     private CategorieExcursion $categorie;
     private array $etapes;
 
