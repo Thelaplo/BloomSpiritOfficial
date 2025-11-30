@@ -17,7 +17,7 @@ class Excursion
     private CategorieExcursion $categorie;
     private array $etapes;
 
-    public function __construct(string $id, string $nom, string $desc, int $duree, string $difficulte, int $nbLimitPers, float $prix, TypeTransport $typeTransport, CategorieExcursion $categorie)
+    public function __construct(string $id, string $nom, string $desc, int $duree, string $difficulte, int $nbLimitPers, float $prix, CategorieExcursion $categorie)
     {
         $this->id = $id;
         $this->nom = $nom;
@@ -26,9 +26,9 @@ class Excursion
         $this->difficulte = $difficulte;
         $this->nbLimitPers = $nbLimitPers;
         $this->prix = $prix;
-        $this->typeTransport = $typeTransport;
+        $this->typeTransport = array();
         $this->categorie = $categorie;
-        $this->etape = array();
+        $this->etapes = array();
     }
 
 }

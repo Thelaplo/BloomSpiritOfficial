@@ -6,8 +6,8 @@ class Etape
 {
     private int $numero;
     private string $desc;
-    private int $dureEstimee;
-    private Lieu $lieu
+    private int $dureeEstimee;
+    private Lieu $lieu;
 
     public function __construct(int $numero, string $desc, int $dureEstimee, Lieu $lieu)
     {
