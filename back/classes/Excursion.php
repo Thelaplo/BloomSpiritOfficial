@@ -31,6 +31,105 @@ class Excursion
         $this->etapes = array();
     }
 
+     public function GetId()
+    {
+        return $this->id;
+    }
+
+     public function GetNom()
+    {
+        return $this->nom;
+    }
+
+    public function GetDesc()
+    {
+        return $this->desc;
+    }
+
+    public function GetDuree()
+    {
+        return $this->duree;
+    }
+
+    public function GetDifficulte()
+    {
+        return $this->difficulte;
+    }
+
+    public function GetNbLimitPers()
+    {
+        return $this->nbLimitPers;
+    }
+
+    public function GetPrix()
+    {
+        return $this->prix;
+    }
+
+    public function GetTypeTransport()
+    {
+        return $this->typeTransport;
+    }
+
+    public function GetCategorie()
+    {
+        return $this->categorie;
+    }
+
+    public function GetEtapes()
+    {
+        return $this->Etapes;
+    }
+
+    public function SetId(string $id)
+    {
+        $this->id = $id;
+    }
+
+    public function SetNom(string $nom)
+    {
+        $this->nom = $nom;
+    }
+
+    public function SetDesc(string $desc)
+    {
+        $this->desc = $desc;
+    }
+
+    public function SetDuree(int $duree)
+    {
+        $this->duree = $duree;
+    }
+
+    public function SetDifficulte(string $difficulte)
+    {
+        $this->difficulte = $difficulte;
+    }
+
+    public function SetNbLimitPers(int $nbLimitPers)
+    {
+        $this->nbLimitPers = $nbLimitPers;
+    }
+
+    public function SetPrix(float $prix)
+    {
+        $this->prix = $prix;
+    }
+
+    public function SetTypeTransport(array $typeTransport)
+    {
+        $this->typeTransport = $typeTransport;     
+    }
+
+    public function SetCategorie(CategorieExcurion $categorie)
+    {
+        $this->categorie = $categorie;
+    }
+
+    public function SetEtapes(array $etapes)
+    {
+        $this->etapes = $etapes;
+    }
 }
 
 
