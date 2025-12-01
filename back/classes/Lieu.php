@@ -22,6 +22,86 @@ class Lieu
         $this->img = $img;
         $this->type = $type;
     }
+
+    public function GetId()
+    {
+        return $this->id;
+    }
+
+    public function GetNom()
+    {
+        return $this->nom;
+    }
+
+    public function GetDesc()
+    {
+        return $this->desc;
+    }
+
+    public function GetLatitude()
+    {
+        return $this->latitude;
+    }
+
+    public function GetLongitude()
+    {
+        return $this->longitude;
+    }
+
+    public function GetNote()
+    {
+        return $this->note;
+    }
+
+    public function GetImg()
+    {
+        return $this->img;
+    }
+
+    public function GetLieu()
+    {
+        return $this->type;
+    }
+
+    public function SetId(int $id)
+    {
+        $this->id = $îd;
+    }
+
+    public function SetDesc(string $desc)
+    {
+        $this->desc = $desc;
+    }
+
+    public function SetNom(string $nom)
+    {
+        $this->nom = $nom;
+    }
+
+    public function SetLatitude(float $latitude)
+    {
+        $this->latitude = $latitude;
+    }
+
+    public function SetLongitude(float $longitude)
+    {
+        $this->longitude = $longitude;
+    }
+
+    public function SetNote(float $note)
+    {
+        $this->note = $note;
+    }
+
+    public function SetImg(string $img)
+    {
+        $this->img = $img;
+    }
+
+    public function SetType(TypeLieu $type)
+    {
+        $this->type = $type;
+    }
 }
 
 ?>

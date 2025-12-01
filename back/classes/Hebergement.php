@@ -58,37 +58,37 @@ class Hebergement
         return $this->capacite;
     }
 
-    public function SetId()
+    public function SetId(int $id)
     {
         $this->id = $id;
     }
 
-    public function SetNom()
+    public function SetNom(string $nom)
     {
         $this->nom = $nom;
     }
 
-    public function SetEtoiles()
+    public function SetEtoiles(string $etoiles)
     {
         $this->etoiles = $etoiles;
     }
 
-    public function SetRue()
+    public function SetRue(string $rue)
     {
         $this->rue = $rue;
     }
 
-    public function SetCp()
+    public function SetCp(string $cp)
     {
         $this->cp = $cp;
     }
 
-    public function SetVille()
+    public function SetVille(string $ville)
     {
         $this->ville = $ville;
     }
 
-    public function SetCapacite()
+    public function SetCapacite(int $capacite)
     {
         $this->capacite = $capacite;
     }
