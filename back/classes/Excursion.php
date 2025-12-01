@@ -31,12 +31,12 @@ class Excursion
         $this->etapes = array();
     }
 
-     public function GetId()
+    public function GetId()
     {
         return $this->id;
     }
 
-     public function GetNom()
+    public function GetNom()
     {
         return $this->nom;
     }
