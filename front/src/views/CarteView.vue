@@ -1,5 +1,4 @@
-<!-- <template>
-    <template>
+<template>
   <div id="bloom-spirit-site">
     <header class="hero-section">
       <div class="hero-image-container">
@@ -31,4 +30,5 @@
         </a>
       </div>
     </header>
-</template> -->
+  </div>
+</template>

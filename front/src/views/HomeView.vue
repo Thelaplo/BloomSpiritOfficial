@@ -24,7 +24,7 @@
         </div>
         
 
-        <router-link to="/Carte.vue"  class="carte-button-wrapper">
+        <router-link to="/CarteView.vue"  class="carte-button-wrapper">
             <img src="/public/img/fleur.png" alt="Carte" class="carte-fleur-image">
             <span class="carte-text"></span>
         </router-link>
@@ -98,7 +98,7 @@ import card from '../components/card.vue';
   margin: 20px; 
 }
 
-/* Styles pour le logo (Image) à gauche */
+/* Styles pour le logo */
 .site-logo {
   height: 45px; 
   width: auto;
