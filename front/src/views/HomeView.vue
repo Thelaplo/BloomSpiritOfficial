@@ -4,11 +4,6 @@
       <div class="hero-image-container">
 
         <div class="header-top-bar">
-
-          <a href="#" class="logo-link">
-            <img src="/public/img/BloomSpirit.png" alt="Bloom Spirit Logo" class="site-logo">
-          </a>
-
           <nav class="top-nav-center">
             <a href="#" class="nav-rectangle-group">
               <span>Excursion</span>
@@ -18,6 +13,9 @@
               <span>Contactez-nous</span>
             </a>
           </nav>
+          <a href="#" class="logo-link">
+            <img src="/public/img/BloomSpirit.png" alt="Bloom Spirit Logo" class="site-logo">
+          </a>
 
           <a href="#" class="account-logo-link">
             <img src="/public/img/Compte.png" alt="Compte" class="account-logo">
@@ -26,10 +24,10 @@
         </div>
         
 
-        <a href="#" class="carte-button-wrapper">
+        <router-link to="/Carte.vue"  class="carte-button-wrapper">
             <img src="/public/img/fleur.png" alt="Carte" class="carte-fleur-image">
             <span class="carte-text"></span>
-        </a>
+        </router-link>
       </div>
     </header>
 
@@ -37,17 +35,7 @@
       <h2>POPULAIRE</h2>
       <div class="destination-cards-container">
         
-        <div class="destination-card tokyo-card">
-          <div class="city-overlay">Tokyo</div>
-        </div>
-
-        <div class="destination-card kyoto-card">
-          <div class="city-overlay">Kyoto</div>
-        </div>
-
-        <div class="destination-card okinawa-card">
-          <div class="city-overlay">Okinawa</div>
-        </div>
+       <card /> 
         
       </div>
     </section>
@@ -59,7 +47,7 @@
 </template>
 
 <script setup>
-// Aucun script (logique) nécessaire pour une vue statique
+import card from '../components/card.vue';
 </script>
 
 <style scoped>
@@ -67,13 +55,13 @@
 
 #bloom-spirit-site {
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  background-color: #f7f7f7;
+  background-color: #FFEAF1;
   text-align: center;
   padding-bottom: 50px;
 }
 
 /* ------------------ Section Hero ------------------ */
-/* ------------------ Section Hero ------------------ */
+
 .hero-section {
   max-width: none;
   margin: 0;
@@ -83,48 +71,36 @@
 
 .hero-image-container {
   background-image: url('/public/img/backAcceuil.jpg');
-  /* La hauteur peut devenir problématique si elle est fixe. 
-     Ajustons-la en fonction du ratio pour la rendre plus fluide, 
-     mais pour l'instant, gardons 450px en fixe pour éviter le saut */
   height: 450px; 
   background-size: cover;
-  background-position: center; /* Simplifions la position à 'center' */
+  background-position: center; 
   border-radius: 0; 
   position: relative;
   overflow: visible; 
-  
-  /* ... autres styles ... */
 }
 
 /* ------------------ BARRE DU HAUT & NAVIGATION ------------------ */
 
-/* ------------------ BARRE DU HAUT : Logo | Menu Groupé | Compte ------------------ */
-
 .header-top-bar {
   position: absolute;
   top: 25px;
-  left: 30px;
+  left: 10px;
   right: 30px;
-  /* Utilisation de Flexbox pour une répartition flexible */
   display: flex;
   justify-content: space-between; 
   align-items: center;
   z-index: 20;
 }
 
-/* Le menu groupé a besoin de ne pas être trop large pour laisser de l'espace au logo */
 .top-nav-center {
-  /* Retirons le flex-grow: 1 pour éviter qu'il prenne trop de place */
-  /* flex-grow: 1; */ 
   display: flex;
   justify-content: center;
-  /* AJUSTEMENT : Ajoutons une petite marge pour éviter de coller au logo et à l'icône de compte */
-  margin: 0 40px; 
+  margin: 20px; 
 }
 
 /* Styles pour le logo (Image) à gauche */
 .site-logo {
-  height: 40px; 
+  height: 45px; 
   width: auto;
   object-fit: contain;
 }
@@ -135,7 +111,6 @@
   width: auto;
   object-fit: contain;
 }
-
 
 /* Styles pour le RECTANGLE DE NAVIGATION GROUPÉ */
 .nav-rectangle-group {
@@ -165,23 +140,25 @@
 }
 
 
-/* ------------------ TITRE PRINCIPAL GRAND ET CENTRÉ ------------------ */
+/* ------------------ LOGO PRINCIPAL CENTRÉ (NOUVEAU BLOC) ------------------ */
 
-/* Ajout du titre central (non visible dans la dernière capture, mais présent dans la Figma) */
-.site-title-center {
+.main-hero-logo {
   position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 3em; /* Taille de base */
-  /* ... autres styles ... */
-}
-
-/* AJUSTEMENT RESPONSIVE POUR LE TITRE */
-@media (max-width: 768px) {
-    .site-title-center {
-        font-size: 1.8em; /* Réduire la taille du titre sur mobile */
-    }
+  
+  /* Centrage Horizontal Parfait */
+  left: 60%;
+  transform: translateX(-50%); 
+  
+  /* Position Verticale : Ajustement pour le placer au-dessus de la pagode */
+  top: 110px; 
+  
+  /* Taille du logo principal */
+  width: 300px; 
+  height: auto;
+  z-index: 15; 
+  
+  /* Rend le logo blanc pour qu'il soit visible sur le fond sombre */
+  filter: invert(100%); 
 }
 
 
@@ -189,18 +166,14 @@
 
 .carte-button-wrapper {
   
-  /* CORRECTION 2: TAILLE RELATIVE (fluidité pour le responsive) */
-  width: 200px; /* Taille maximale ou de base */
-  height: 200px;
-  
+  width: 150px; 
+  height: 150px;
   /* POSITIONNEMENT CRUCIAL POUR LE CHEVAUCHEMENT */
   position: absolute;
-  top: 78%; /* 95% de la hauteur de l'image (pour chevaucher le fond blanc) */
+  top: 83%; 
   left: 50%;
   transform: translateX(-50%); /* Centre horizontalement */
   z-index: 30;
-  
-  /* ... autres styles ... */
 }
 .carte-fleur-image {
     width: 100%;
@@ -213,13 +186,16 @@
   color: white; 
   font-weight: bold;
   font-size: 1.1em;
-  pointer-events: none; /* Permet de cliquer sur l'image en dessous */
+  pointer-events: none;
+  /* ✅ AJOUT DU CENTRAGE POUR LE TEXTE DE LA FLEUR */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
 }
 
 
 /* ------------------ Sections Titres H2 ------------------ */
 .popular-section {
-    /* La fleur chevauche, donc on réduit la marge supérieure de la section */
     padding-top: 50px; 
 }
 
@@ -231,5 +207,94 @@
   color: #333;
 }
 
-/* ... (Le reste des styles des cartes, overlays, et media queries est correct) ... */
+/* ------------------ Section Populaire - Cartes ------------------ */
+.destination-cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  padding: 0 20px;
+}
+
+.destination-card {
+  width: 320px;
+  height: 480px;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+.destination-card:hover {
+    transform: translateY(-10px);
+}
+
+
+/* Images de fond pour chaque carte (VÉRIFIEZ LES CHEMINS !) */
+.tokyo-card    { background-image: url('/public/img/tokyo.jpg'); }
+.kyoto-card    { background-image: url('/public/img/kyoto.jpg'); }
+.okinawa-card  { background-image: url('/public/img/nara.jpg'); } 
+
+
+/* L'overlay contenant le nom de la ville et l'effet de couleur rose en bas */
+.city-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 40px 20px 20px;
+  color: white;
+  font-size: 1.8em;
+  font-weight: bold;
+  text-align: left;
+
+  /* Gradient pour simuler l'effet de vague/couleur */
+  background: linear-gradient(
+    to top,
+    rgba(240, 98, 146, 0.8) 0%,
+    rgba(240, 98, 146, 0.4) 40%,
+    transparent 80%
+  );
+
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+
+/* ------------------ Media Queries (pour le responsive) ------------------ */
+@media (max-width: 1024px) {
+  .destination-cards-container {
+    gap: 15px;
+  }
+  .destination-card {
+    width: 45%;
+    height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-image-container {
+    height: 300px;
+  }
+  
+  /* ❌ SUPPRIMÉ : Suppression de la classe .site-logo-center-image non utilisée */
+  
+  .carte-button-wrapper {
+      width: 150px; /* Taille ajustée pour le mobile */
+      height: 150px;
+      top: 85%; /* Ajustement mobile du bouton */
+  }
+
+  .destination-cards-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .destination-card {
+    width: 90%;
+    max-width: 400px;
+    height: 300px;
+  }
+}
 </style>
