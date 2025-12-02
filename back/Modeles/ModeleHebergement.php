@@ -3,24 +3,20 @@
     class ModeleHebergement
     {
 
-    public function SelectAllHebergement()
+    public static function SelectAllHebergement()
     {
-        	include_once('../connexpdo.inc.php');
+        include_once('./connexpdo.inc.php');
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM Hebergement";
         $requete=$cnx->prepare($reqChaine);
         $result=$requete->execute();
         while($uneLigne=$requete->fetch(PDO::FETCH_ASSOC)) 
             {
-			echo "<tr>";
-			foreach($uneLigne as $valeur)
-			{
-				echo "<td> $valeur </td>";
-			}
-			echo "</tr>";
-        }
-                echo "</table>";
-                
+                foreach($uneLigne as $valeur)
+                {
+                    echo $valeur;
+                }
+            }                    
         $requete->closeCursor();
         $cnx=null;
     }

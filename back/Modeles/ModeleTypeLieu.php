@@ -3,24 +3,20 @@
     class ModeleTypeLieu
     {
 
-    public function SelectAllTypeLieu()
+    public static function SelectAllTypeLieu()
     {
-        	include_once('../connexpdo.inc.php');
+        include_once('./connexpdo.inc.php');
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM TypeLieu";
         $requete=$cnx->prepare($reqChaine);
         $result=$requete->execute();
         while($uneLigne=$requete->fetch(PDO::FETCH_ASSOC)) 
             {
-			echo "<tr>";
-			foreach($uneLigne as $valeur)
-			{
-				echo "<td> $valeur </td>";
-			}
-			echo "</tr>";
-        }
-                echo "</table>";
-                
+                foreach($uneLigne as $valeur)
+                {
+                    echo $valeur;
+                }
+            }                    
         $requete->closeCursor();
         $cnx=null;
     }
