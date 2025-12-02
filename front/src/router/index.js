@@ -18,7 +18,7 @@ const router = createRouter({
     },
     {
       // Bonne pratique : utiliser des chemins en minuscules
-      path: '/CarteView.vue', 
+      path: '/carte', 
       name: 'carte', 
       component: CarteView
     },
