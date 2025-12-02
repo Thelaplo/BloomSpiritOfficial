@@ -131,7 +131,7 @@
 
 /* Styles pour le logo Compte/Connexion (à droite) */
 .account-logo {
-  height: 30px; 
+  height: 45px; 
   width: auto;
   object-fit: contain;
 }
@@ -188,7 +188,6 @@
 /* ------------------ BOUTON FLEUR (CORRIGÉ ET REPOSITIONNÉ) ------------------ */
 
 .carte-button-wrapper {
-  /* ... autres styles ... */
   
   /* CORRECTION 2: TAILLE RELATIVE (fluidité pour le responsive) */
   width: 200px; /* Taille maximale ou de base */
