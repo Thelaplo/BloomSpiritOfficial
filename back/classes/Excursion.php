@@ -31,102 +31,102 @@ class Excursion
         $this->etapes = array();
     }
 
-    public function GetId()
+    public function GetId() : string
     {
         return $this->id;
     }
 
-    public function GetNom()
+    public function GetNom() : string
     {
         return $this->nom;
     }
 
-    public function GetDesc()
+    public function GetDesc() : string
     {
         return $this->desc;
     }
 
-    public function GetDuree()
+    public function GetDuree() : int
     {
         return $this->duree;
     }
 
-    public function GetDifficulte()
+    public function GetDifficulte() : string
     {
         return $this->difficulte;
     }
 
-    public function GetNbLimitPers()
+    public function GetNbLimitPers() : int
     {
         return $this->nbLimitPers;
     }
 
-    public function GetPrix()
+    public function GetPrix() : float
     {
         return $this->prix;
     }
 
-    public function GetTypeTransport()
+    public function GetTypeTransport() : array
     {
         return $this->typeTransport;
     }
 
-    public function GetCategorie()
+    public function GetCategorie() : CategorieExcursion
     {
         return $this->categorie;
     }
 
-    public function GetEtapes()
+    public function GetEtapes() : array
     {
         return $this->Etapes;
     }
 
-    public function SetId(string $id)
+    public function SetId(string $id) : void
     {
         $this->id = $id;
     }
 
-    public function SetNom(string $nom)
+    public function SetNom(string $nom) : void
     {
         $this->nom = $nom;
     }
 
-    public function SetDesc(string $desc)
+    public function SetDesc(string $desc) : void
     {
         $this->desc = $desc;
     }
 
-    public function SetDuree(int $duree)
+    public function SetDuree(int $duree) : void
     {
         $this->duree = $duree;
     }
 
-    public function SetDifficulte(string $difficulte)
+    public function SetDifficulte(string $difficulte) : void
     {
         $this->difficulte = $difficulte;
     }
 
-    public function SetNbLimitPers(int $nbLimitPers)
+    public function SetNbLimitPers(int $nbLimitPers) : void
     {
         $this->nbLimitPers = $nbLimitPers;
     }
 
-    public function SetPrix(float $prix)
+    public function SetPrix(float $prix) : void
     {
         $this->prix = $prix;
     }
 
-    public function SetTypeTransport(array $typeTransport)
+    public function SetTypeTransport(array $typeTransport) : void
     {
         $this->typeTransport = $typeTransport;     
     }
 
-    public function SetCategorie(CategorieExcurion $categorie)
+    public function SetCategorie(CategorieExcurion $categorie) : void
     {
         $this->categorie = $categorie;
     }
 
-    public function SetEtapes(array $etapes)
+    public function SetEtapes(array $etapes) : void
     {
         $this->etapes = $etapes;
     }

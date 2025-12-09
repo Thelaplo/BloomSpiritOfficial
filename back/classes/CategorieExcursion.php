@@ -11,22 +11,22 @@ class CategorieExcursion
         $this->libelle = $libelle;
     }
     
-    public function GetId()
+    public function GetId() : string
     {
         return $this->id;
     }
 
-    public function GetLibelle()
+    public function GetLibelle() : string
     {
         return $this->libelle;
     }
 
-    public function SetId(string $id)
+    public function SetId(string $id) : void
     {
         $this->id = $id;
     }
 
-    public function SetLibelle(string $libelle)
+    public function SetLibelle(string $libelle) :void
     {
         $this->libelle = $libelle;
     }

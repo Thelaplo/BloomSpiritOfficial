@@ -23,82 +23,82 @@ class Lieu
         $this->type = $type;
     }
 
-    public function GetId()
+    public function GetId() : int
     {
         return $this->id;
     }
 
-    public function GetNom()
+    public function GetNom() : string
     {
         return $this->nom;
     }
 
-    public function GetDesc()
+    public function GetDesc() : string
     {
         return $this->desc;
     }
 
-    public function GetLatitude()
+    public function GetLatitude() : float
     {
         return $this->latitude;
     }
 
-    public function GetLongitude()
+    public function GetLongitude() : float
     {
         return $this->longitude;
     }
 
-    public function GetNote()
+    public function GetNote() : float
     {
         return $this->note;
     }
 
-    public function GetImg()
+    public function GetImg() : string
     {
         return $this->img;
     }
 
-    public function GetLieu()
+    public function GetLieu() : TypeLieu
     {
         return $this->type;
     }
 
-    public function SetId(int $id)
+    public function SetId(int $id) : void
     {
         $this->id = $îd;
     }
 
-    public function SetDesc(string $desc)
+    public function SetDesc(string $desc) : void
     {
         $this->desc = $desc;
     }
 
-    public function SetNom(string $nom)
+    public function SetNom(string $nom) : void
     {
         $this->nom = $nom;
     }
 
-    public function SetLatitude(float $latitude)
+    public function SetLatitude(float $latitude) : void
     {
         $this->latitude = $latitude;
     }
 
-    public function SetLongitude(float $longitude)
+    public function SetLongitude(float $longitude) : void
     {
         $this->longitude = $longitude;
     }
 
-    public function SetNote(float $note)
+    public function SetNote(float $note) : void
     {
         $this->note = $note;
     }
 
-    public function SetImg(string $img)
+    public function SetImg(string $img) : void
     {
         $this->img = $img;
     }
 
-    public function SetType(TypeLieu $type)
+    public function SetType(TypeLieu $type) : void
     {
         $this->type = $type;
     }

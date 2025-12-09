@@ -5,7 +5,7 @@
     class ModeleCategorieExcursion
     {
 
-    public static function SelectAllCategorieExcursion()
+    public static function SelectAllCategorieExcursion() : array
     {
         $categorie = array();
         include_once('./connexpdo.inc.php');
@@ -20,17 +20,12 @@
                 $cat = new CategorieExcursion($id,$lib);
                 array_push($categorie,$cat);
             }
-        echo "<br/>";
-        echo "<br/>";
-        print_r($categorie);
-        echo "<br/>";
-        echo "<br/>";
-
         $requete->closeCursor();
         $cnx=null;
+        return $categorie;
     }
 
-    public static function UpdateCategorieExcursion(string $id, string $lib)
+    public static function UpdateById(string $id, string $lib) : void
     {
         include_once('./connexpdo.inc.php');
         $cnx=connexpdo('bdExcursion','myparam');
@@ -38,14 +33,7 @@
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$id,PDO::PARAM_STR);
         $requete->BindParam(':lib',$lib,PDO::PARAM_STR);
-        $result=$requete->execute();
-        while($uneLigne=$requete->fetch(PDO::FETCH_ASSOC)) 
-            {
-                foreach($uneLigne as $valeur)
-                {
-                    echo $valeur;
-                }
-            }                    
+        $result=$requete->execute();                   
         $requete->closeCursor();
         $cnx=null;
     }
