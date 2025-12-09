@@ -49,6 +49,20 @@ class ModeleUtilisateur {
         $requete->closeCursor();
         $cnx=null;
     }
+
+    public static function InsertUtilisateur (Utilisateur $utilisateur) :void 
+    {
+        include_once('./connexpdo.inc.php');
+        $cnx=connexpdo('bdExcursion','myparam');
+        $reqChaine="INSERT INTO Avis VALUES(:login, :mdp, :IsAdmin)";
+        $requete=$cnx->prepare($reqChaine);
+        $requete->BindParam(":login", $avis->GetLogin(), PDO::PARAM_STR);
+        $requete->BindParam(":mdp", $avis->GetMdp(),PDO::PARAM_STR);
+        $requete->BindParam(":IsAdmin", $avis->GetIsAdmin(), PDO::PARAM_BOOL);
+        $result=$requete->execute();
+        $requete->closeCursor();
+        $cnx=null;
+    }
 }
 
 ?>

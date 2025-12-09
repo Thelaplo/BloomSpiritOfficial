@@ -123,6 +123,22 @@ class ModeleUtilisateur {
         $requete->closeCursor();
         $cnx=null;
     }
+
+    public static function InsertAvis (Avis $avis) :void 
+    {
+        include_once('./connexpdo.inc.php');
+        $cnx=connexpdo('bdExcursion','myparam');
+        $reqChaine="INSERT INTO Avis VALUES(:numero, :login, :idExcursion, :contenu, :note)";
+        $requete=$cnx->prepare($reqChaine);
+        $requete->BindParam(":numero", $avis->GetNumero(), PDO::PARAM_INT);
+        $requete->BindParam(":login", $avis->GetLogin(),PDO::PARAM_STR);
+        $requete->BindParam(":idExcursion", $avis->GetIdExcursion(), PDO::PARAM_INT);
+        $requete->BidnParam(":contenu", $avis->GetContenu(), PDO::PARAM_STR);
+        $requete->BidnParam(":note", $avis->GetNote(), PDO::PARAM_STR);
+        $result=$requete->execute();
+        $requete->closeCursor();
+        $cnx=null;
+    }
 }
 
 ?>
