@@ -17,6 +17,30 @@ class Avis
         $this->note = $note;
     }
 
+    public function GetNumero():int
+    {
+        return $this->numero;
+    }
+
+    public function GetLogin():string
+    {
+        return $this->login;
+    }
+
+    public function GetIdExcursion():int
+    {
+        return $this->idExcursion;
+    }
+
+    public function GetContenu():string
+    {
+        return $this->contenu;
+    }
+
+    public function GetNote():int
+    {
+        return $this->note;
+    }
 }
 
 

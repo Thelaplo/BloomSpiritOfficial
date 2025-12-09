@@ -42,9 +42,9 @@ class ModeleUtilisateur {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="UPDATE Utilisateur SET login = :login, mdp = :mdp, IsAdmin = :IsAdmin WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
-        $requete->BindParam(":login", $login,PDO::PARAM_STR);
-        $requete->BindParam(":mdp", $mdp, PDO::PARAM_STR);
-        $requete->BidnParam(":IsAdmin", $IsAdmin, PDO::PARAM_BOOL);
+        $requete->BindParam(":login", $utilisateur->GetLogin(),PDO::PARAM_STR);
+        $requete->BindParam(":mdp", $utilisateur->GetMdp(), PDO::PARAM_STR);
+        $requete->BidnParam(":IsAdmin", $utilisateur->GetIsAdmin(), PDO::PARAM_BOOL);
         $result=$requete->execute();
         $requete->closeCursor();
         $cnx=null;

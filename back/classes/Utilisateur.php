@@ -13,12 +13,17 @@ class Utilisateur
         $this->IsAdmin = $IsAdmin;
     }
 
-    public function GetLogin()
+    public function GetLogin() : string
     {
         return $this->login;
     }
 
-    public function GetIsAdmin()
+    public function GetMdp():string
+    {
+        return $this->mdp;
+    }
+
+    public function GetIsAdmin():bool
     {
         return $this->IsAdmin;
     }

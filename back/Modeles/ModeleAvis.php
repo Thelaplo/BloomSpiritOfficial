@@ -114,11 +114,11 @@ class ModeleUtilisateur {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="UPDATE Avis SET numero = :numero, login = :login, idExcursion = :idExcursion, contenu = :contenu, note = :note WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
-        $requete->BindParam(":numero", $numero, PDO::PARAM_INT);
-        $requete->BindParam(":login", $login,PDO::PARAM_STR);
-        $requete->BindParam(":idExcursion", $idExcursion, PDO::PARAM_INT);
-        $requete->BidnParam(":contenu", $contenu, PDO::PARAM_STR);
-        $requete->BidnParam(":note", $note, PDO::PARAM_STR);
+        $requete->BindParam(":numero", $avis->GetNumero(), PDO::PARAM_INT);
+        $requete->BindParam(":login", $avis->GetLogin(),PDO::PARAM_STR);
+        $requete->BindParam(":idExcursion", $avis->GetIdExcursion(), PDO::PARAM_INT);
+        $requete->BidnParam(":contenu", $avis->GetContenu(), PDO::PARAM_STR);
+        $requete->BidnParam(":note", $avis->GetNote(), PDO::PARAM_STR);
         $result=$requete->execute();
         $requete->closeCursor();
         $cnx=null;
