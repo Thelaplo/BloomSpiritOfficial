@@ -58,7 +58,7 @@ class Lieu
         return $this->img;
     }
 
-    public function GetLieu() : TypeLieu
+    public function GetTypeLieu() : TypeLieu
     {
         return $this->type;
     }

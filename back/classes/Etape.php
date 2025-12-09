@@ -1,6 +1,7 @@
 <?php
 
 include_once("Lieu.php");
+include_once("Hebergement.php");
 
 class Etape
 {
@@ -8,13 +9,15 @@ class Etape
     private string $desc;
     private int $dureeEstimee;
     private Lieu $lieu;
+    private Hebergement $hebergement;
 
-    public function __construct(int $numero, string $desc, int $dureeEstimee, Lieu $lieu)
+    public function __construct(int $numero, string $desc, int $dureeEstimee, Lieu $lieu, Hebergement $hebergement)
     {
         $this->numero = $numero;
         $this->desc = $desc;
         $this->dureeEstimee = $dureeEstimee;
         $this->lieu = $lieu;
+        $this->hebergement = $hebergement;
     }
 
     public function GetNumero() : int
@@ -37,6 +40,11 @@ class Etape
         return $this->lieu;
     }
 
+    public function GetHebergement() : Lieu
+    {
+        return $this->hebergement;
+    }
+
     public function SetNumero(int $numero) : void
     {
         $this->numero = $numero;
@@ -55,6 +63,11 @@ class Etape
     public function SetLieu(Lieu $lieu) : void
     {
         $this->lieu = $lieu;
+    }
+
+    public function SetHebergement(Hebergement $hebergement) : void
+    {
+        $this->hebergement = $hebergement;
     }
 }
 
