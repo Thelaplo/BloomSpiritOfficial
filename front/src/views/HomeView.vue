@@ -24,7 +24,7 @@
         </div>
         
 
-        <router-link to="/CarteView.vue"  class="carte-button-wrapper">
+        <router-link to="/carte"  class="carte-button-wrapper">
             <img src="/public/img/fleur.png" alt="Carte" class="carte-fleur-image">
             <span class="carte-text"></span>
         </router-link>
