@@ -108,17 +108,17 @@ class ModeleUtilisateur {
         $cnx=null;
     }
 
-    public static function UpdateByIdAndNumero(int $id, int $numero) : void
+    public static function Update(Avis $avis) : void
     {
         include_once('./connexpdo.inc.php');
         $cnx=connexpdo('bdExcursion','myparam');
-        $reqChaine="UPDATE Avis SET login = :login, mdp = :mdp, IsAdmin = :IsAdmin WHERE id = :id AND numero = :numero";
+        $reqChaine="UPDATE Avis SET numero = :numero, login = :login, idExcursion = :idExcursion, contenu = :contenu, note = :note WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
-        $requete->BindParam(":numero", $login, PDO::PARAM_INT);
+        $requete->BindParam(":numero", $numero, PDO::PARAM_INT);
         $requete->BindParam(":login", $login,PDO::PARAM_STR);
         $requete->BindParam(":idExcursion", $idExcursion, PDO::PARAM_INT);
         $requete->BidnParam(":contenu", $contenu, PDO::PARAM_STR);
-        $requete->BindParam(":note", $note, PDO::PARAM_INT);
+        $requete->BidnParam(":note", $note, PDO::PARAM_STR);
         $result=$requete->execute();
         $requete->closeCursor();
         $cnx=null;
