@@ -23,6 +23,7 @@ class ModeleUtilisateur {
         }
         $requete->closeCursor();
         $cnx=null;
+        return $lesAvis;
     }
 
     public static function SelectByIdAndNumero(int $id, int $numero): array
