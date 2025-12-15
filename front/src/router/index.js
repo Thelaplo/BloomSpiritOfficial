@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // ✅ 1. Tous les imports de Vues/Composants sont regroupés ici :
 import HomeView from '../views/HomeView.vue'
 import CarteView from '../views/CarteView.vue' 
+import LoginView from '../views/LoginView.vue'
 
 
 
@@ -12,7 +13,13 @@ const router = createRouter({
   // ✅ 2. Toutes les routes sont dans un seul tableau 'routes' :
   routes: [
     {
-      path: '/',
+      // Bonne pratique : utiliser des chemins en minuscules
+      path: '/', 
+      name: 'login', 
+      component: LoginView
+    },
+    {
+      path: '/home',
       name: 'home',
       component: HomeView
     },
@@ -22,7 +29,7 @@ const router = createRouter({
       name: 'carte', 
       component: CarteView
     },
-   
+    
   ]
 })
 
