@@ -50,7 +50,7 @@ class ModeleUtilisateur {
         $cnx=null;
     }
 
-    public static function InsertUtilisateur (Utilisateur $utilisateur) :void 
+    public static function Insert(Utilisateur $utilisateur) :void 
     {
         include_once('./connexpdo.inc.php');
         $cnx=connexpdo('bdExcursion','myparam');

@@ -124,7 +124,7 @@ class ModeleUtilisateur {
         $cnx=null;
     }
 
-    public static function InsertAvis (Avis $avis) :void 
+    public static function Insert(Avis $avis) :void 
     {
         include_once('./connexpdo.inc.php');
         $cnx=connexpdo('bdExcursion','myparam');
