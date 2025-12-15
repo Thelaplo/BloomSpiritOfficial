@@ -23,75 +23,86 @@ class Hebergement
         $this->capacite = $capacite;
     }
 
-    public function GetId()
+    public function GetId() : int
     {
         return $this->id;
     }
 
-    public function GetNom()
+    public function GetNom() : string
     {
         return $this->nom;
     }
 
-    public function GetEtoiles()
+    public function GetType() : string
+    {
+        return $this->type;
+    }
+
+    public function GetEtoiles() : float
     {
         return $this->etoiles;
     }
 
-    public function GetRue()
+    public function GetRue() : string
     {
         return $this->rue;
     }
 
-    public function GetCp()
+    public function GetCp() : string
     {
         return $this->cp;
     }
 
-    public function GetVille()
+    public function GetVille() : string
     {
         return $this->ville;
     }
 
-    public function GetCapacite()
+    public function GetCapacite() : int
     {
         return $this->capacite;
     }
 
-    public function SetId(int $id)
+    public function SetId(int $id) : void
     {
         $this->id = $id;
     }
 
-    public function SetNom(string $nom)
+    public function SetNom(string $nom) : void
     {
         $this->nom = $nom;
     }
 
-    public function SetEtoiles(string $etoiles)
+    public function SetType(string $type) : void
+    {
+        $this->type = $type;
+    }
+
+    public function SetEtoiles(string $etoiles) : void
     {
         $this->etoiles = $etoiles;
     }
 
-    public function SetRue(string $rue)
+    public function SetRue(string $rue) : void
     {
         $this->rue = $rue;
     }
 
-    public function SetCp(string $cp)
+    public function SetCp(string $cp) : void
     {
         $this->cp = $cp;
     }
 
-    public function SetVille(string $ville)
+    public function SetVille(string $ville) : void
     {
         $this->ville = $ville;
     }
 
-    public function SetCapacite(int $capacite)
+    public function SetCapacite(int $capacite) : void
     {
         $this->capacite = $capacite;
     }
+
 }
 
 ?>
