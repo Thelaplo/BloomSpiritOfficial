@@ -47,7 +47,7 @@
         return $etape;
     }
 
-    public static function SelectEtapeByIdExcursio(int $id) : array
+    public static function SelectEtapeByIdExcursion(int $id) : array
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM Etape ET INNER JOIN EXCURSION EX ON ET.iExcursion = EX.id WHERE EX.id = :id";

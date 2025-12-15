@@ -74,7 +74,7 @@
         $cnx=null;
     }
 
-    public static function Updat(TypeTransport $TypeTransport) : void
+    public static function Update(TypeTransport $TypeTransport) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="UPDATE TypeTransport SET id = :id, lib = :lib WHERE id = :id";
