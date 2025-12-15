@@ -1,6 +1,5 @@
 <template>
   <div class="detail-page-container" v-if="voyage.id">
-    
     <header class="header-container">
       <div class="header-top-bar">
           <nav class="top-nav-center">
@@ -22,18 +21,14 @@
 
         </div>
       <div class="summary-info-block">
-          
-          
-          
           <h1>Histoire de {{ voyage.title }} :</h1>
-          
           <p class="header-description-text">
             {{ voyage.title }} est une grande ville portuaire et un centre économique majeur de l'Ouest du Japon. Elle est connue pour son architecture moderne, sa vie nocturne et la qualité de sa street food.
           </p>
 
           <div class="trip-summary-card">
             <div class="duree-estim"></div>
-            <h2>Promenade à {{ voyage.title }}</h2>
+              <h2>Promenade à {{ voyage.title }}</h2>
             <div class="details-row">
               <p>Durée estimée : {{ voyage.duration }} jours</p>
               <p class="price-info">À partir de {{ formatCurrency(voyage.price) }} / p</p>
@@ -57,25 +52,28 @@
       <div class="main-info-column">
           
         <section class="itinerary-section timeline-section">
-          <h2>Itinéraire Détaillé</h2>
-          
-          <ul class="itinerary-timeline">
-              <li>
-                  <span class="step-label">Jour 1 :</span>
-                  <h3>Arrivée et transfert</h3>
-                  <p>Installation, suivi d'un dîner traditionnel.</p>
-              </li>
-              <li>
-                  <span class="step-label">Jour 2 :</span>
-                  <h3>Balade au cœur de {{ voyage.title }}</h3>
-                  <p>Exploration guidée des sites culturels et déjeuner inclus.</p>
-              </li>
-              <li>
-                  <span class="step-label">Jour 3 :</span>
-                  <h3>Musée Toyotomi Ishigaki</h3>
-                  <p>Visite du musée et découverte de l'histoire locale.</p>
-              </li>
-          </ul>
+            <ul class="itinerary-timeline">
+                <li v-for="(step, index) in voyage.timeline_steps" :key="index">
+                    
+                    <div class="step-alternating-content">
+                        
+                        <span class="step-label">Jour {{ step.day }} - {{ step.label }}</span>
+                        
+                        <img src="/public/img/rondRose.png" alt="Etape" class="timeline-dot-img">
+                        
+                    </div>
+                    
+                </li>
+            </ul>
+        </section>
+        <section class="map-section">
+            <h2>Localisation de la Région</h2>
+            
+            <img :src="voyage.mapImageUrl" 
+                alt="Carte de la région de {{ voyage.title }}" 
+                class="region-map-image">
+                
+            <p class="map-note">Zoom sur la Region </p>
         </section>
 
       </div>
@@ -88,11 +86,7 @@
               <p>Durée : {{ voyage.duration }} jours</p>
           </div>
 
-          <div class="side-info-block pink-block reservation-block">
-              <h3>Prix : {{ formatCurrency(voyage.price) }}</h3>
-              <p>Réduction : <span>{{ formatCurrency(voyage.price * 0.2) }} EUR</span></p>
-              <button class="reserve-button">Réserver maintenant</button>
-          </div>
+          
           
           <!-- <div class="side-info-block white-block contact-block">
               <h3>Contactez-nous</h3>
@@ -164,7 +158,8 @@ export default {
             'Miyako-jima': '宮古島',
             'Osaka': '大阪',
             'Kyoto': '京都',
-            'Tokyo': '東京'
+            'Tokyo': '東京',
+            'Kumejima': '久米島'
         };
         const simpleTitle = title.split(' ')[0];
         return map[title] || map[simpleTitle] || title.charAt(0);
@@ -190,6 +185,12 @@ export default {
   background-color: var(--secondary-color);
   min-height: 100vh;
 }
+/* Mes Polices*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amarnath:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Judson:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap');
+
 /*-------------------Barre de Navigation-----------------------------*/ 
 .header-top-bar {
   position: absolute;
@@ -295,13 +296,14 @@ export default {
     padding-top: 60px; 
     position: relative; 
     z-index: 10;
+    font-family: "Judson",serif;
 }
 
 .summary-info-block h1 {
     font-size: 1.8em;
     width: 80%;
     margin-bottom: 5px;
-    color: var(--text-dark); /* Plus foncé que le primary color */
+    color: black; /* Plus foncé que le primary color */
 }
 
 /* 🔥 NOUVEAU STYLE : Texte de description dans le Header */
@@ -310,6 +312,7 @@ export default {
     line-height: 1.5;
     margin-bottom: 50px;
     max-width: 70%; /* Pour que le texte n'aille pas trop loin */
+    font-family: "Judson", sans-serif;
 }
 
 /* 1.2 Image (Positionnée en ABSOLU à droite) */
@@ -329,7 +332,7 @@ export default {
 /* 1.3 Caractère Japonais (inchangé) */
 .japanese-title {
     position: absolute;
-    top: 150px; 
+    top: 75px; 
     left: -57px; 
     font-size: 100px; 
     max-width: 1%;
@@ -344,6 +347,7 @@ export default {
     border-radius: 10px 0 0 10px; 
     z-index: 10; 
     line-height: 1;
+    font-family:"Judson", serif;
 }
 
 /* 1.4 Carte de résumé (Bloc d'information rose du Figma) */
@@ -354,7 +358,7 @@ export default {
     /* 🔥 CORRECTION CLÉ : Réduction de la largeur pour le rendre très vertical */
     width: 200px; /* Utiliser une largeur fixe (ex: 300px) est plus stable que 35% dans cette colonne */
     max-width: 50%; /* Sécurité pour les petits écrans */
-    padding: 20px; /* Légèrement réduit pour un aspect plus compact */
+    padding: 10px; /* Légèrement réduit pour un aspect plus compact */
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin-top: 10px;
@@ -363,16 +367,21 @@ export default {
 }
 
 .trip-summary-card h2 {
-    font-size: 1.2em;
-    color: #f96b9b;
+    font-size: 20px;
+    color: #9e073a;
     margin-bottom: 5px;
     text-align:left;
     padding-bottom: 5px;
+    padding-right:50px;
+    margin-left: 20px;;
+    top:-10px;
+    font-family: "Lora", serif;
+
 }
 
 .details-row p {
     margin: 5px 0;
-    font-size: 0.9em;
+    font-size: 17px;
     color:#f7f6f6;
     padding:10px;
     text-align:center;
@@ -404,19 +413,24 @@ export default {
 .favorite-button {
     /* Bouton Favoris (Texte) */
     background-color: transparent;
-    border: none; /* Retrait de la bordure */
-    color: var(--primary-color);
-    width: fit-content; /* Prend juste la largeur nécessaire */
+    border: 1px solid rgb(152, 41, 67);;
+    color: rgb(152, 41, 67);
+    border-radius: 5px;
+    width: 170px; /* Prend juste la largeur nécessaire */
     margin: 0 auto; /* Centrer dans l'espace disponible */
     padding: 5px 0;
+    
 }
 
 .contact-button {
     /* Bouton Contacter l'agence (Rectangle Rose) */
-    background-color: rgb(209, 118, 144);
-    border: 3px solid rgb(209, 118, 144);;
-    color: rgb(129, 55, 55);
+    background-color: rgb(152, 41, 67);
+    border: 3px solid rgb(152, 41, 67);;
+    color: rgb(247, 177, 177);
     border-radius: 5px;
+    margin: 5px auto;
+    width: 170px;
+    
 }
 
 
@@ -434,17 +448,126 @@ export default {
   gap: 40px;
 }
 
-/* Sections d'information principales (gauche) */
-.info-section, .itinerary-section {
-    position: relative;
+
+/* ----------------------------------- */
+/* TIMELINE : Base et Ligne Centrale */
+/* ----------------------------------- */
+
+.itinerary-section {
     background-color: white;
-    padding: 20px;
-    padding-left: 60px; /* Espace pour le numéro de section */
+    padding: 30px; 
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     margin-bottom: 30px;
 }
 
+.itinerary-timeline {
+    list-style: none;
+    padding: 0;
+    position: relative;
+}
+
+/* 1. La Ligne Verticale (Tracée au centre) */
+.itinerary-timeline::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%; 
+    width: 3px;
+    background-color: #f095b3; 
+    transform: translateX(-50%); 
+    z-index: 1; 
+}
+.itinerary-timeline li:last-child::after {
+    content: '';
+    position: absolute;
+    
+    /* Place un grand rectangle BLANC au bas de la ligne centrale */
+    left: 50%;
+    bottom: -19px;
+    width: 30px; /* Largeur suffisante pour masquer la ligne */
+    height: 30px; /* Hauteur suffisante pour masquer le bas */
+    
+    /* 🔥 La couleur du fond de la SECTION ITINÉRAIRE est la clé */
+    background-color: white; 
+    
+    transform: translateX(-50%);
+    z-index: 10; /* Assure qu'il couvre la ligne */
+}
+/* 2. Style de chaque élément <li> (Structure pour l'alternance) */
+.itinerary-timeline li {
+    position: relative;
+    margin-bottom: 40px; 
+    padding: 0;
+}
+
+/* 3. Conteneur du Texte et de l'Image (Utilise la Grille) */
+.step-alternating-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Division 50% / 50% */
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    gap:10px;
+   
+}
+
+/* Cible le conteneur du texte et du rond */
+.step-content-container {
+    display: flex;
+    align-items: center; /* 🔥 LA CLÉ : Centre tous les éléments sur l'axe vertical */
+    gap: 15px;
+    /* D'autres styles de flex-direction sont appliqués aux étapes paires/impaires */
+}
+
+/* 4. L'Image PNG (Positionnement Absolu au centre) */
+.timeline-dot-img {
+    position: absolute;
+    left: 50%; 
+    top: 0;
+    
+    /* Centrage et dimensionnement de l'image */
+    width: 25px; 
+    height: 25px;
+    transform: translate(-50%, -50%); 
+    
+    /* Pour que l'image couvre la ligne */
+    z-index: 10; 
+    border-radius: 50%; /* Si l'image n'est pas déjà un cercle parfait */
+    border: 4px solid white; /* Bordure blanche pour couper la ligne */
+}
+
+
+/* 5. ALIGNEMENT ALTERNÉ : Styles des Labels */
+
+.step-label {
+    font-size: 20px;
+    /* font-weight: bold; */
+    color: var(--text-dark); 
+    display: block; 
+    padding-top: 0px; 
+    position: relative;
+    top:-10px;
+    font-family:"Judson", serif;
+}
+
+/* Étapes Impaires (GAUCHE) */
+.itinerary-timeline li:nth-child(odd) .step-label {
+    grid-column: 1 / 2; /* Reste dans la colonne de gauche */
+    text-align: right; /* Aligne le texte vers le centre */
+    padding-right: 30px; /* Espace vers le rond */
+}
+
+/* Étapes Paires (DROITE) */
+.itinerary-timeline li:nth-child(even) .step-label {
+    grid-column: 2 / 3; /* Colonne de droite */
+    text-align: left; /* Aligne le texte loin du centre */
+    padding-left: 30px; /* Espace vers le rond */
+}
+/*--------------------------------------- */
+/* -----FIN DE LA SECTION ITINERARY------- */
+/*--------------------------------------- */
 .section-number {
     position: absolute;
     top: 10px;
@@ -471,56 +594,22 @@ export default {
     margin-top: 10px;
 }
 
-/* Itinéraire Détaillé (Les étapes) */
-.itinerary-steps {
-    list-style: none;
-    padding: 0;
-    counter-reset: step-counter; /* Initialiser le compteur */
-}
 
-.itinerary-steps li {
-    position: relative;
-    padding-left: 30px;
-    margin-bottom: 15px;
-    line-height: 1.5;
-}
-
-.itinerary-steps li h3 {
-    font-size: 1em;
-    color: var(--primary-color);
-    margin: 0;
-}
-
-.itinerary-steps li::before {
-    content: counter(step-counter);
-    counter-increment: step-counter;
-    position: absolute;
-    left: 0;
-    top: 0;
-    background-color: var(--primary-color);
-    color: white;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    text-align: center;
-    font-size: 0.8em;
-    line-height: 20px;
-    font-weight: bold;
-}
 
 /* Colonne Latérale (Side Info) */
 .side-info-block {
     padding: 20px;
+    background-color: pink;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
 }
 
-.pink-block {
+/* .pink-block {
     background-color: var(--secondary-color); 
     border: 1px solid #f9d8e1; 
     color: var(--text-dark);
-}
+} */
 
 .pink-block h3 {
     color: var(--primary-color);
@@ -530,54 +619,42 @@ export default {
     margin-bottom: 10px;
     font-size: 1.2em;
 }
+/* ------------------------------------------- */
+/* NOUVEAUX STYLES : SECTION CARTE (Map) */
+/* ------------------------------------------- */
 
-.reservation-block span {
-    color: #008000; 
-    font-weight: bold;
-}
-
-.reserve-button {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-/* Bloc Contact (Formulaire) */
-.contact-block {
+.map-section {
     background-color: white;
+    padding: 30px; 
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-top: 30px; /* Espace après la timeline */
 }
 
-.contact-block form input,
-.contact-block form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box; 
-    font-size: 0.9em;
+.map-section h2 {
+    font-family: 'Judson', serif; /* Exemple d'application d'une police spécifique */
+    color: var(--primary-color);
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
 }
 
-.contact-block form textarea {
-    resize: vertical;
-    min-height: 80px;
+.region-map-image {
+    width: 100%; /* L'image prend toute la largeur du conteneur */
+    max-height: auto;
+    object-fit: cover; /* Assure que l'image couvre l'espace sans se déformer */
+    border-radius: 8px;
+    display: block;
 }
 
-.submit-contact-button {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
+.map-note {
+    font-size: 0.85em;
+    color: #666;
+    margin-top: 10px;
+    text-align: center;
 }
+
 
 /* Responsive */
 @media (max-width: 900px) {
