@@ -6,6 +6,7 @@
 
     public static function SelectAll() : array
     {
+        try{
         $excursion = array();
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM Excursion";
@@ -29,10 +30,15 @@
         $requete->closeCursor();
         $cnx=null;
         return $excursion;
+        } catch(PDOException $e)
+        {
+            throw new PDOException($e->getMessage(), (int)$e->getCode());
+        }
     }
 
     public static function SelectById(string $id) : Excursion
     {
+        try{
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM Excursion WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
@@ -55,10 +61,15 @@
         $requete->closeCursor();
         $cnx=null;
         return $excu;
+        } catch(PDOException $e)
+        {
+            throw new PDOException($e->getMessage(), (int)$e->getCode());
+        }
     }
 
     public static function DeleteById(int $id) : void
     {
+        try{
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="DELETE FROM Excursion WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
@@ -66,10 +77,15 @@
         $result=$requete->execute();
         $requete->closeCursor();
         $cnx=null;
+        } catch(PDOException $e)
+        {
+            throw new PDOException($e->getMessage(), (int)$e->getCode());
+        }
     }
 
     public static function Update(Excursion $excursion) : void
     {
+        try{
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="UPDATE Excursion SET id = :id, nom = :nom, commentaire = :com, duree = :duree, difficulte = :dif, nbLimitPers = :lim, prix = CONVERT(:prix, DECIMAL), idCat = :idCat WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
@@ -84,10 +100,15 @@
         $result=$requete->execute();                   
         $requete->closeCursor();
         $cnx=null;
+        } catch(PDOException $e)
+        {
+            throw new PDOException($e->getMessage(), (int)$e->getCode());
+        }
     }
 
     public static function Insert(Excursion $excursion) : void
     {
+        try{
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="INSERT INTO Excursion VALUES (:id, :nom, :com, :duree, :dif, :lim, CONVERT(:prix, DECIMAL), :idCat";
         $requete=$cnx->prepare($reqChaine);
@@ -102,6 +123,10 @@
         $result=$requete->execute();                   
         $requete->closeCursor();
         $cnx=null;
+        } catch(PDOException $e)
+        {
+            throw new PDOException($e->getMessage(), (int)$e->getCode());
+        }
     }
     
 
