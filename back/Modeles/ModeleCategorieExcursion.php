@@ -6,9 +6,9 @@
     class ModeleCategorieExcursion
     {
 
-    public static function SelectAllCat() : array
+    public static function SelectAll() : array
     {
-        $categorie = array();
+        $catExcursion = array();
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM Categorie";
         $requete=$cnx->prepare($reqChaine);
@@ -18,14 +18,14 @@
                 $id = $uneLigne['id'];
                 $lib = $uneLigne['lib'];
                 $cat = new CategorieExcursion($id,$lib);
-                array_push($categorie,$cat);
+                array_push($catExcursion,$cat);
             }
         $requete->closeCursor();
         $cnx=null;
-        return $categorie;
+        return $catExcursion;
     }
 
-    public static function SelectByIdCat(string $id) : CategorieExcursion
+    public static function SelectById(string $id) : CategorieExcursion
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM Categorie WHERE id = :id";
@@ -43,7 +43,7 @@
         return $cat;
     }
 
-    public static function DeleteByIdCat(string $id) : void
+    public static function DeleteById(string $id) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="DELETE FROM Categorie WHERE id = :id";
@@ -54,25 +54,25 @@
         $cnx=null;
     }
 
-    public static function UpdateCat(CategorieExcusion $categorie) : void
+    public static function Update(CategorieExcusion $catExcursion) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="UPDATE Categorie SET id = :id, lib = :lib WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
-        $requete->BindParam(':id',$categorie->GetId(),PDO::PARAM_STR);
-        $requete->BindParam(':lib',$categorie->GetLib(),PDO::PARAM_STR);
+        $requete->BindParam(':id',$catExcursion->GetId(),PDO::PARAM_STR);
+        $requete->BindParam(':lib',$catExcursion->GetLib(),PDO::PARAM_STR);
         $result=$requete->execute();                   
         $requete->closeCursor();
         $cnx=null;
     }
 
-    public static function InsertCat(CategorieExcusion $categorie) : void
+    public static function Insert(CategorieExcusion $catExcursion) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="INSERT INTO Categorie VALUES (:id,:lib)";
         $requete=$cnx->prepare($reqChaine);
-        $requete->BindParam(':id',$categorie->GetId(),PDO::PARAM_STR);
-        $requete->BindParam(':lib',$categorie->GetLib(),PDO::PARAM_STR);
+        $requete->BindParam(':id',$catExcursion->GetId(),PDO::PARAM_STR);
+        $requete->BindParam(':lib',$catExcursion->GetLib(),PDO::PARAM_STR);
         $result=$requete->execute();                   
         $requete->closeCursor();
         $cnx=null;

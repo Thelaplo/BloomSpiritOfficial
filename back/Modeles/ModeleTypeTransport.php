@@ -7,7 +7,7 @@
     class ModeleTypeTransport
     {
 
-    public static function SelectAllTransport() : array
+    public static function SelectAll() : array
     {
         $transport = array();
         $cnx=connexpdo('bdExcursion','myparam');
@@ -18,8 +18,8 @@
             {
                 $id = $uneLigne['id'];
                 $lib = $uneLigne['lib'];
-                $cat = new TypeTransport($id,$lib);
-                array_push($categorie,$cat);
+                $typeTransport = new TypeTransport($id,$lib);
+                array_push($categorie,$typeTransport);
             }
         $requete->closeCursor();
         $cnx=null;
@@ -44,7 +44,7 @@
         return $lesTypes;
     }
 
-    public static function SelectByIdTransport(string $id) : TypeTransport
+    public static function SelectById(string $id) : TypeTransport
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM TypeTransport WHERE id = :id";
@@ -55,15 +55,15 @@
             {
                 $id = $uneLigne['id'];
                 $lib = $uneLigne['lib'];
-                $cat = new TypeTransport($id,$lib);
-                array_push($categorie,$cat);
+                $typeTransport = new TypeTransport($id,$lib);
+                array_push($categorie,$typeTransport);
             }
         $requete->closeCursor();
         $cnx=null;
-        return $cat;
+        return $typeTransport;
     }
 
-    public static function DeleteByIdTypeTransport(string $id) : void
+    public static function DeleteById(string $id) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="DELETE FROM TypeTransport WHERE id = :id";
@@ -74,7 +74,7 @@
         $cnx=null;
     }
 
-    public static function UpdateTypeTransport(TypeTransport $TypeTransport) : void
+    public static function Updat(TypeTransport $TypeTransport) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="UPDATE TypeTransport SET id = :id, lib = :lib WHERE id = :id";
@@ -86,7 +86,7 @@
         $cnx=null;
     }
 
-    public static function InsertTypeTransport(TypeTransport $TypeTransport) : void
+    public static function Insert(TypeTransport $TypeTransport) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="INSERT INTO TypeTransport VALUES (:id,:lib)";

@@ -6,9 +6,9 @@
     class ModeleHebergement
     {
 
-    public static function SelectAllHebergement() : array
+    public static function SelectAll() : array
     {
-        $categorie = array();
+        $hebergement = array();
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM Hebergement";
         $requete=$cnx->prepare($reqChaine);
@@ -24,15 +24,15 @@
                 $cp = $uneLigne['cp'];
                 $ville = $uneLigne['ville'];
                 $cap = $uneLigne['capacite'];
-                $cat = new Hebergement($id,$lib,$type,$etoiles,$adr,$img,$cp,$ville,$cap);
-                array_push($categorie,$cat);
+                $heb = new Hebergement($id,$lib,$type,$etoiles,$adr,$img,$cp,$ville,$cap);
+                array_push($hebergement,$heb);
             }
         $requete->closeCursor();
         $cnx=null;
-        return $categorie;
+        return $hebergement;
     }
 
-    public static function SelectByIdHebergement(string $id) : Hebergement
+    public static function SelectById(string $id) : Hebergement
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM Hebergement WHERE id = :id";
@@ -50,14 +50,14 @@
                 $cp = $uneLigne['cp'];
                 $ville = $uneLigne['ville'];
                 $cap = $uneLigne['capacite'];
-                $cat = new Hebergement($id,$lib,$type,$etoiles,$adr,$img,$cp,$ville,$cap);
+                $heb = new Hebergement($id,$lib,$type,$etoiles,$adr,$img,$cp,$ville,$cap);
             }
         $requete->closeCursor();
         $cnx=null;
-        return $cat;
+        return $heb;
     }
 
-    public static function DeleteByIdHebergement(int $id) : void
+    public static function DeleteById(int $id) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="DELETE FROM Hebergement WHERE id = :id";
@@ -68,39 +68,39 @@
         $cnx=null;
     }
 
-    public static function UpdateHebergement(Hebergement $categorie) : void
+    public static function Update(Hebergement $hebergement) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="UPDATE Hebergement SET id = :id, nom = :lib, type = :type, etoiles = CONVERT(:etoiles, DECIMAL), adresse = :adr, image = :img, cp = :cp, ville = :ville, capacite = :cap WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
-        $requete->BindParam(':id',$categorie->GetId(),PDO::PARAM_INT);
-        $requete->BindParam(':lib',$categorie->GetNom(),PDO::PARAM_STR);
-        $requete->BindParam(':type',$categorie->GetType(),PDO::PARAM_STR);
-        $requete->BindParam(':etoiles',(string)$categorie->GetEtoiles(),PDO::PARAM_STR);
-        $requete->BindParam(':adr',(string)$categorie->GetRue(),PDO::PARAM_STR);
-        $requete->BindParam(':img',(string)$categorie->GetImg(),PDO::PARAM_STR);
-        $requete->BindParam(':cp',$categorie->GetCP(),PDO::PARAM_STR);
-        $requete->BindParam(':ville',$categorie->GetVille(),PDO::PARAM_STR);
-        $requete->BindParam(':cap',$categorie->GetCapacite()->GetId(),PDO::PARAM_INT);
+        $requete->BindParam(':id',$hebergement->GetId(),PDO::PARAM_INT);
+        $requete->BindParam(':lib',$hebergement->GetNom(),PDO::PARAM_STR);
+        $requete->BindParam(':type',$hebergement->GetType(),PDO::PARAM_STR);
+        $requete->BindParam(':etoiles',(string)$hebergement->GetEtoiles(),PDO::PARAM_STR);
+        $requete->BindParam(':adr',(string)$hebergement->GetRue(),PDO::PARAM_STR);
+        $requete->BindParam(':img',(string)$hebergement->GetImg(),PDO::PARAM_STR);
+        $requete->BindParam(':cp',$hebergement->GetCP(),PDO::PARAM_STR);
+        $requete->BindParam(':ville',$hebergement->GetVille(),PDO::PARAM_STR);
+        $requete->BindParam(':cap',$hebergement->GetCapacite()->GetId(),PDO::PARAM_INT);
         $result=$requete->execute();                   
         $requete->closeCursor();
         $cnx=null;
     }
 
-    public static function InsertHebergement(Hebergement $categorie) : void
+    public static function Insert(Hebergement $hebergement) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="INSERT INTO Hebergement VALUES (:id, :lib, :type, CONVERT(:etoiles, DECIMAL), :adr, :img, :cp, :ville, :cap)";
         $requete=$cnx->prepare($reqChaine);
-        $requete->BindParam(':id',$categorie->GetId(),PDO::PARAM_INT);
-        $requete->BindParam(':lib',$categorie->GetNom(),PDO::PARAM_STR);
-        $requete->BindParam(':type',$categorie->GetType(),PDO::PARAM_STR);
-        $requete->BindParam(':etoiles',(string)$categorie->GetEtoiles(),PDO::PARAM_STR);
-        $requete->BindParam(':adr',(string)$categorie->GetRue(),PDO::PARAM_STR);
-        $requete->BindParam(':img',(string)$categorie->GetImg(),PDO::PARAM_STR);
-        $requete->BindParam(':cp',$categorie->GetCP(),PDO::PARAM_STR);
-        $requete->BindParam(':ville',$categorie->GetVille(),PDO::PARAM_STR);
-        $requete->BindParam(':cap',$categorie->GetCapacite()->GetId(),PDO::PARAM_INT);
+        $requete->BindParam(':id',$hebergement->GetId(),PDO::PARAM_INT);
+        $requete->BindParam(':lib',$hebergement->GetNom(),PDO::PARAM_STR);
+        $requete->BindParam(':type',$hebergement->GetType(),PDO::PARAM_STR);
+        $requete->BindParam(':etoiles',(string)$hebergement->GetEtoiles(),PDO::PARAM_STR);
+        $requete->BindParam(':adr',(string)$hebergement->GetRue(),PDO::PARAM_STR);
+        $requete->BindParam(':img',(string)$hebergement->GetImg(),PDO::PARAM_STR);
+        $requete->BindParam(':cp',$hebergement->GetCP(),PDO::PARAM_STR);
+        $requete->BindParam(':ville',$hebergement->GetVille(),PDO::PARAM_STR);
+        $requete->BindParam(':cap',$hebergement->GetCapacite()->GetId(),PDO::PARAM_INT);
         $result=$requete->execute();                   
         $requete->closeCursor();
         $cnx=null;

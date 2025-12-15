@@ -4,7 +4,7 @@
     class ModeleEtape
     {
 
-    public static function SelectAllEtape() : array
+    public static function SelectAll() : array
     {
         $Etapes = array();
         $cnx=connexpdo('bdExcursion','myparam');
@@ -26,7 +26,7 @@
         return $Etape;
     }
 
-    public static function SelectByIdEtape(string $id) : Etape
+    public static function SelectById(string $id) : Etape
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM Etape WHERE id = :id";
@@ -47,7 +47,7 @@
         return $etape;
     }
 
-    public static function SelectEtapeByIdExcursion(int $id) : array
+    public static function SelectEtapeByIdExcursio(int $id) : array
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM Etape ET INNER JOIN EXCURSION EX ON ET.iExcursion = EX.id WHERE EX.id = :id";
@@ -68,7 +68,7 @@
         return $lesTypes;
     }
 
-    public static function DeleteByIdEtape(int $id, int $id2) : void
+    public static function DeleteById(int $id, int $id2) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="DELETE FROM Etape WHERE idExcursion = :id AND numOrdre = :id2";
@@ -80,7 +80,7 @@
         $cnx=null;
     }
 
-    public static function UpdateTypeEtape(Etape $Etape) : void
+    public static function Update(Etape $Etape) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="UPDATE Etape SET numOrdre = :id, commentaire = :lib, dureeEst = :duree, idLieu = :idLieu, idHebergement = :idHebergement WHERE numOrdre = :id";
@@ -95,7 +95,7 @@
         $cnx=null;
     }
 
-    public static function InsertTypeEtape(Etape $Etape) : void
+    public static function Insert(Etape $Etape) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="INSERT INTO Etape (numOrdre,commentaire,dureeEst,idLieu,idHebergemnt) VALUES (:id,:lib,:duree,:idLieu,:idHebergement)";

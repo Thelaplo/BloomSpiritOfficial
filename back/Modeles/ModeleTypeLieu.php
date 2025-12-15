@@ -6,9 +6,9 @@
     class ModeleTypeLieu
     {
 
-    public static function SelectAllTypeLieu() : array
+    public static function SelectAll() : array
     {
-        $categorie = array();
+        $typeLieu = array();
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM TypeLieu";
         $requete=$cnx->prepare($reqChaine);
@@ -17,15 +17,15 @@
             {
                 $id = $uneLigne['id'];
                 $lib = $uneLigne['lib'];
-                $cat = new TypeLieu($id,$lib);
-                array_push($categorie,$cat);
+                $typeLi = new TypeLieu($id,$lib);
+                array_push($typeLieu,$typeLi);
             }
         $requete->closeCursor();
         $cnx=null;
-        return $categorie;
+        return $typeLieu;
     }
 
-    public static function SelectByIdTypeLieu(string $id) : TypeLieu
+    public static function SelectById(string $id) : TypeLieu
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM TypeLieu WHERE id = :id";
@@ -36,14 +36,14 @@
             {
                 $id = $uneLigne['id'];
                 $lib = $uneLigne['lib'];
-                $cat = new TypeLieu($id,$lib);
+                $typeLi = new TypeLieu($id,$lib);
             }
         $requete->closeCursor();
         $cnx=null;
-        return $cat;
+        return $typeLi;
     }
 
-    public static function DeleteByIdTypeLieu(string $id) : void
+    public static function DeleteById(string $id) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="DELETE FROM TypeLieu WHERE id = :id";
@@ -54,25 +54,25 @@
         $cnx=null;
     }
 
-    public static function UpdateTypeLieu(TypeLieu $categorie) : void
+    public static function Update(TypeLieu $typeLieu) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="UPDATE TypeLieu SET id = :id, lib = :lib WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
-        $requete->BindParam(':id',$categorie->GetId(),PDO::PARAM_STR);
-        $requete->BindParam(':lib',$categorie->GetLib(),PDO::PARAM_STR);
+        $requete->BindParam(':id',$typeLieu->GetId(),PDO::PARAM_STR);
+        $requete->BindParam(':lib',$typeLieu->GetLib(),PDO::PARAM_STR);
         $result=$requete->execute();                   
         $requete->closeCursor();
         $cnx=null;
     }
 
-    public static function InsertTypeLieu(TypeLieu $categorie) : void
+    public static function Insert(TypeLieu $typeLieu) : void
     {
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="INSERT INTO TypeLieu VALUES (:id,:lib)";
         $requete=$cnx->prepare($reqChaine);
-        $requete->BindParam(':id',$categorie->GetId(),PDO::PARAM_STR);
-        $requete->BindParam(':lib',$categorie->GetLib(),PDO::PARAM_STR);
+        $requete->BindParam(':id',$typeLieu->GetId(),PDO::PARAM_STR);
+        $requete->BindParam(':lib',$typeLieu->GetLib(),PDO::PARAM_STR);
         $result=$requete->execute();                   
         $requete->closeCursor();
         $cnx=null;
