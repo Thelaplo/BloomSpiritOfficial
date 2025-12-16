@@ -1,21 +1,22 @@
 <template>
-  <div class="travel-card">
-    <img :src="travel.imageUrl" :alt="travel.title" class="card-image">
-    <div class="card-content">
-      <h3 class="card-title">{{ travel.title }}</h3>
-      <p class="card-details">
-        {{ travel.duration }} jours à partir de 
-        <span class="price">{{ formatCurrency(travel.price) }}</span>
-      </p>
-      <a href="#" class="card-link">voir plus</a>
+  <router-link :to="{ name: 'detail', params: { id: travel.id }}" class="travel-card-link">
+    <div class="travel-card">
+      
+      <img :src="travel.imageUrl" :alt="travel.title" class="card-image">
+      <div class="card-content">
+        <h3 class="card-title">{{ travel.title }}</h3>
+        <p class="card-details">
+          {{ travel.duration }} jours à partir de 
+          <span class="price">{{ formatCurrency(travel.price) }}</span>
+        </p>
+        <span class="card-link">voir plus</span>
+      </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
-// On utilise l'Options API ici, ce qui est compatible avec le script de CarteView.vue
 export default {
-  // Déclare que ce composant accepte une prop nommée 'travel'
   props: {
     travel: {
       type: Object,
@@ -23,7 +24,6 @@ export default {
     }
   },
   methods: {
-    // Méthode pour formater le prix en Euro
     formatCurrency(value) {
       return new Intl.NumberFormat('fr-FR', {
         style: 'currency',
@@ -36,7 +36,12 @@ export default {
 </script>
 
 <style scoped>
-/* Les styles sont déjà bons, je les laisse tels quels */
+/* Ajout d'un style pour retirer le soulignement du lien et étendre la zone de clic */
+.travel-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block; 
+}
 /* Styles de la carte (tirés du CSS précédent) */
 .travel-card {
   background-color: #fff;
@@ -56,35 +61,40 @@ export default {
   width: 100%;
   height: 180px; 
   object-fit: cover;
-  display: block;
 }
 
 .card-content {
-  padding: 15px 10px;
+  padding: 15px;
+  text-align: left;
 }
 
 .card-title {
-  font-size: 1.1em;
-  margin-bottom: 5px;
-  font-weight: 600;
+  margin: 0 0 5px 0;
+  font-size: 1.2em;
+  color: #333;
 }
 
 .card-details {
   font-size: 0.9em;
-  color: #555;
-  margin-bottom: 10px;
+  color: #666;
+  margin: 0 0 10px 0;
 }
 
 .price {
-    font-weight: bold;
-    color: #e91e63; /* Couleur principale */
+  color: #e91e63;
+  font-weight: bold;
+  font-size: 1.1em;
 }
 
 .card-link {
-  display: block;
-  font-size: 0.85em;
+  display: inline-block;
   color: #e91e63;
+  font-weight: bold;
   text-decoration: none;
-  font-weight: 500;
+  border-bottom: 2px solid #f095b3;
+}
+
+.card-link:hover {
+  border-bottom-color: #e91e63;
 }
 </style>

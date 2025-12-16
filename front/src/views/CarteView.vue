@@ -23,19 +23,20 @@
             </svg>
           </button>
         </div>
+        
         <div class="header-top-bar">
           <nav class="top-nav-center">
-            <a href="#" class="nav-rectangle-group">
+             <router-link to="/" class="nav-rectangle-group">
               <span>Excursion</span>
               <span class="separator">|</span>
               <span>Carte</span>
               <span class="separator">|</span>
               <span>Contactez-nous</span>
-            </a>
+            </router-link>
           </nav>
-          <a href="#" class="logo-link">
+          <router-link to="/" class="logo-link">
             <img src="/public/img/BloomSpirit.png" alt="Bloom Spirit Logo" class="site-logo">
-          </a>
+          </router-link>
 
           <a href="#" class="account-logo-link">
             <img src="/public/img/Compte.png" alt="Compte" class="account-logo">
@@ -56,7 +57,7 @@
                 <option value="50km">Moins de 50 km</option>
                 <option value="100km">Moins de 100 km</option>
                 <option value="200km">Moins de 200 km</option>
-                </select>
+            </select>
         </div>
         <div class="filter-group">
           <label for="options">Options</label>
@@ -102,6 +103,7 @@
   </div>
 </template>
 <script>
+import { voyages } from '../data.js'; // ✅ Import du tableau de données centralisé
 import TravelCard from '../components/travelcard.vue'; 
 import CarteJapon from '../components/CarteJapon.vue';
 
@@ -112,25 +114,13 @@ export default {
   },
   data() {
     return {
-      // PROPRIÉTÉS DE FILTRAGE
       searchQuery: '',
       filters: {
-        distance: '', // Nouveau filtre actif
+        distance: '', 
         options: '',
         theme: '',
       },
-      
-      // Données de voyage (avec distance_km ajoutée)
-      voyages: [
-        { id: 1, title: 'Torii Miyajima', duration: 6, price: 950, imageUrl: '/public/img/torii-Miyajima.jpeg', options: 'Culturel', theme: 'Temple', distance_km: 75 },
-        { id: 2, title: 'Shirakawa-go', duration: 5, price: 620, imageUrl: '/public/img/shirakawa_go.jpg', options: 'Nature', theme: 'Montagne', distance_km: 150 },
-        { id: 3, title: 'Chute de Nachi', duration: 5, price: 620, imageUrl: '/public/img/Chute2nachi.webp',  options: 'Nature', theme: 'Temple', distance_km: 40 },
-        { id: 4, title: 'Nara', duration: 7, price: 1100, imageUrl: '/public/img/nara.jpg',  options: 'Culturel', theme: 'Temple', distance_km: 120 },
-        { id: 5, title: 'Miyako-jima', duration: 5, price: 920, imageUrl: '/public/img/miyako-jima.jpg',  options: 'Nature', theme: 'Plage', distance_km: 800 },
-        { id: 6, title: 'Shirakawa-go', duration: 5, price: 620, imageUrl: '/public/img/Shirakawa-go2.jpeg', options: 'Nature', theme: 'Montagne', distance_km: 160 },
-        { id: 7, title: 'Taikodani Inari-jinja', duration: 7, price: 1100, imageUrl: '/public/img/Taikodani-inari-jinja.jpg',options: 'Culturel', theme: 'Temple', distance_km: 50 },
-        { id: 8, title: 'Kumejima', duration: 7, price: 630, imageUrl: '/public/img/kumejima.jpg',options: 'Nature', theme: 'Plage', distance_km: 130 },
-      ]
+      voyages: voyages // ✅ Utilisation des données importées
     };
   },
   
@@ -179,7 +169,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
   /* À mettre en dehors du "scoped" si possible, ou dans App.vue */
 html, body {
