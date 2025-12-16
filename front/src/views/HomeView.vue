@@ -13,9 +13,9 @@
               <span>Contactez-nous</span>
             </a>
           </nav>
-          <a href="#" class="logo-link">
-            <img src="/public/img/BloomSpirit.png" alt="Bloom Spirit Logo" class="site-logo">
-          </a>
+        <router-link to="/" class="logo-link">
+         <img src="/public/img/BloomSpirit.png" alt="Bloom Spirit Logo" class="site-logo">
+        </router-link>
 
           <a href="#" class="account-logo-link">
             <img src="/public/img/Compte.png" alt="Compte" class="account-logo">
@@ -41,13 +41,15 @@
     </section>
     
     <section class="autumn-offers-section">
-      <h2>Offres d'Automne</h2>
+      <h2>Les Offres du moment</h2>
+      <cardevent />
     </section>
   </div>
 </template>
 
 <script setup>
 import card from '../components/card.vue';
+import cardevent from '../components/cardevent.vue';
 </script>
 
 <style scoped>

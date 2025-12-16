@@ -27,9 +27,9 @@
               <span>Contactez-nous</span>
             </a>
           </nav>
-          <a href="#" class="logo-link">
-            <img src="/public/img/BloomSpirit.png" alt="Bloom Spirit Logo" class="site-logo">
-          </a>
+        <router-link to="/" class="logo-link">
+         <img src="/public/img/BloomSpirit.png" alt="Bloom Spirit Logo" class="site-logo">
+        </router-link>
 
           <a href="#" class="account-logo-link">
             <img src="/public/img/Compte.png" alt="Compte" class="account-logo">
