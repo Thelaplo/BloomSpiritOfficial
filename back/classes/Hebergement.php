@@ -7,17 +7,19 @@ class Hebergement
     private string $type;
     private float $etoiles;
     private string $rue;
+    private string $img;
     private string $cp;
     private string $ville;
     private int $capacite;
 
-    public function __construct(int $id, string $nom, string $type, float $etoiles, string $rue, string $cp, string $ville, int $capacite)
+    public function __construct(int $id, string $nom, string $type, float $etoiles, string $rue, string $img, string $cp, string $ville, int $capacite)
     {
         $this->id = $id;
         $this->nom = $nom;
         $this->type = $type;
         $this->etoiles = $etoiles;
         $this->rue = $rue;
+        $this->img = $img;
         $this->cp = $cp;
         $this->ville = $ville;
         $this->capacite = $capacite;

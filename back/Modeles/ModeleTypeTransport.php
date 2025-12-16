@@ -1,6 +1,6 @@
 <?php
 
-    include('./classes/TypeTransport.php');
+    include_once('./classes/TypeTransport.php');
     include_once('./connexpdo.inc.php');
 
 
@@ -18,9 +18,9 @@
         while($uneLigne=$requete->fetch(PDO::FETCH_ASSOC)) 
             {
                 $id = $uneLigne['id'];
-                $lib = $uneLigne['lib'];
+                $lib = $uneLigne['type'];
                 $typeTransport = new TypeTransport($id,$lib);
-                array_push($categorie,$typeTransport);
+                array_push($transport,$typeTransport);
             }
         $requete->closeCursor();
         $cnx=null;
@@ -44,7 +44,7 @@
         while($uneLigne=$requete->fetch(PDO::FETCH_ASSOC)) 
         {
             $id = $uneLigne['id'];
-            $lib = $uneLigne['lib'];
+            $lib = $uneLigne['type'];
             $type = new TypeTransport($id,$lib);
         }
         return $lesTypes;

@@ -1,5 +1,5 @@
 <?php
-    include('./classes/Lieu.php');
+    include_once('./classes/Lieu.php');
     include_once('./connexpdo.inc.php');
     include_once('Modeles/ModeleTypeLieu.php');
 
@@ -22,8 +22,8 @@
                 $lat = $uneLigne['latitude'];
                 $long = $uneLigne['longitude'];
                 $note = $uneLigne['note'];
-                $img = $uneLigne['img'];
-                $typeLieu = ModeleTypeLieu::SelectByIdTypeLieu($uneLigne['idTypeLieu']);
+                $img = $uneLigne['image'];
+                $typeLieu = ModeleTypeLieu::SelectById($uneLigne['idTypeLieu']);
                 $li = new Lieu($id,$lib,$com,$lat,$long,$note,$img,$typeLieu);
                 array_push($lieu,$li);
             }
@@ -52,8 +52,8 @@
                 $lat = $uneLigne['latitude'];
                 $long = $uneLigne['longitude'];
                 $note = $uneLigne['note'];
-                $img = $uneLigne['img'];
-                $typeLieu = ModeleTypeLieu::SelectByIdTypeLieu($uneLigne['idTypeLieu']);
+                $img = $uneLigne['image'];
+                $typeLieu = ModeleTypeLieu::SelectById($uneLigne['idTypeLieu']);
                 $li = new Lieu($id,$lib,$com,$lat,$long,$note,$img,$typeLieu);
             }
         $requete->closeCursor();

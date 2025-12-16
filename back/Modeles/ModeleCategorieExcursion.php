@@ -1,6 +1,6 @@
 <?php
 
-    include('./classes/CategorieExcursion.php');
+    include_once('./classes/CategorieExcursion.php');
     include_once('./connexpdo.inc.php');
 
     class ModeleCategorieExcursion

@@ -1,5 +1,5 @@
 <?php
-    include('./classes/Hebergement.php');
+    include_once('./classes/Hebergement.php');
     include_once('./connexpdo.inc.php');
 
 
@@ -37,13 +37,13 @@
         }
     }
 
-    public static function SelectById(string $id) : Hebergement
+    public static function SelectById(int $id) : Hebergement
     {
         try{
         $cnx=connexpdo('bdExcursion','myparam');
         $reqChaine="SELECT * FROM Hebergement WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
-        $requete->BindParam(':id',$id,PDO::PARAM_STR);
+        $requete->BindParam(':id',$id,PDO::PARAM_INT);
         $result=$requete->execute();
         while($uneLigne=$requete->fetch(PDO::FETCH_ASSOC)) 
             {

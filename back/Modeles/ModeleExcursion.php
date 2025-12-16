@@ -1,6 +1,9 @@
 <?php
-    include('./classes/Excursion.php');
+    include_once('./classes/Excursion.php');
     include_once('./connexpdo.inc.php');
+    include_once('./modeles/ModeleCategorieExcursion.php');
+    include_once('./modeles/ModeleTypeTransport.php');
+    include_once('./modeles/ModeleEtape.php');
     class ModeleExcursion
     {
 
@@ -21,9 +24,9 @@
                 $dif = $uneLigne['difficulte'];
                 $nbPers = $uneLigne['nbLimitPers'];
                 $prix = $uneLigne['prix'];
-                $idCat = ModeleCategorieExcursion::SelectTransportByIdExcursion($uneLigne['idTypeExcursion']);
-                $typeTransports = ModeleTypeTransport::SelectById($uneLigne['idTypeExcursion']);
-                $etapes = ModeleEtape::SelectEtapeByIdExcursion($uneLigne['idTypeExcursion']);
+                $idCat = ModeleCategorieExcursion::SelectById($uneLigne['idCat']);
+                $typeTransports = ModeleTypeTransport::SelectTransportByIdExcursion($uneLigne['id']);
+                $etapes = ModeleEtape::SelectEtapeByIdExcursion($uneLigne['id']);
                 $excu = new Excursion($id,$lib,$com,$duree,$dif,$nbPers,$prix,$idCat);
                 array_push($excursion,$excu);
             }

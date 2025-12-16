@@ -1,6 +1,6 @@
 <?php
 
-    include('./classes/TypeLieu.php');
+    include_once('./classes/TypeLieu.php');
     include_once('./connexpdo.inc.php');
 
     class ModeleTypeLieu
