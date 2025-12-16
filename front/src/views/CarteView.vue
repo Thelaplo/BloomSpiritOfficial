@@ -3,6 +3,12 @@
     <header class="hero-section">
       <div class="static-hero-container">
         
+        <CarteJapon class="hero-map-overlay" />
+        
+        <div class="search-bar-wrapper">
+          </div>
+        <div class="header-top-bar">
+          </div>
         <div class="search-bar-wrapper">
           <input 
             type="text" 
@@ -97,10 +103,12 @@
 </template>
 <script>
 import TravelCard from '../components/travelcard.vue'; 
+import CarteJapon from '../components/CarteJapon.vue';
 
 export default {
   components: {
-    TravelCard
+    TravelCard,
+    CarteJapon
   },
   data() {
     return {
@@ -251,13 +259,21 @@ export default {
 
 .static-hero-container {
   /* Rétablit l'image de fond statique de la maquette */
-  background: url('/public/img/map-japan.jpeg') no-repeat center center/cover; 
   min-height: 500px; 
   position: relative;
   display: flex; /* Utilisé pour centrer la barre de recherche */
   justify-content: center;
   align-items: center;
   padding: 0; 
+}
+
+.hero-map-overlay {
+      position: absolute; /* Allows it to fill the container without affecting other elements */
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1; /* Place it behind the nav (z-index: 20) and search bar */
 }
 
 
@@ -271,6 +287,8 @@ export default {
   box-shadow: var(--shadow-subtle);
   width: 100%;
   max-width: 600px;
+  z-index: 10; /* Ensure it is above the map (z-index: 1) */
+  position: relative; /* Keep it positioned relative to the container center */
 }
 
 

@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // ✅ 1. Tous les imports de Vues/Composants sont regroupés ici :
 import HomeView from '../views/HomeView.vue'
 import CarteView from '../views/CarteView.vue' 
+import Japon from '../components/CarteJapon.vue' 
 
 
 
@@ -21,6 +22,12 @@ const router = createRouter({
       path: '/carte', 
       name: 'carte', 
       component: CarteView
+    },
+    {
+      // Bonne pratique : utiliser des chemins en minuscules
+      path: '/japon', 
+      name: 'japon', 
+      component: Japon
     },
    
   ]
