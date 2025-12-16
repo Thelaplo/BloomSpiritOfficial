@@ -1,6 +1,9 @@
 <?php
-    include('./classes/Etape.php');
+    include_once('./classes/Etape.php');
     include_once('./connexpdo.inc.php');
+    include_once('./modeles/ModeleLieu.php');
+    include_once('./modeles/ModeleHebergement.php');
+
     class ModeleEtape
     {
 
@@ -16,15 +19,15 @@
             {
                 $id = $uneLigne['numOrdre'];
                 $lib = $uneLigne['commentaire'];
-                $duree = $uneLigne['commentaire'];
-                $lieu = ModeleLieu::SelectByIdLieu($uneLigne['idLieu']);
-                $hebergement = ModeleLieu::SelectByIdHebergement($uneLigne['idHebergement']);
+                $duree = $uneLigne['dureeEst'];
+                $lieu = ModeleLieu::SelectById($uneLigne['idLieu']);
+                $hebergement = ModeleHebergement::SelectById($uneLigne['idHebergement']);
                 $etape = new Etape($id,$lib,$duree,$lieu,$hebergement);
                 array_push($Etapes,$etape);
             }
         $requete->closeCursor();
         $cnx=null;
-        return $Etape;
+        return $Etapes;
         } catch(PDOException $e)
         {
             throw new PDOException($e->getMessage(), (int)$e->getCode());
@@ -45,8 +48,8 @@
                 $id = $uneLigne['numOrdre'];
                 $lib = $uneLigne['commentaire'];
                 $duree = $uneLigne['commentaire'];
-                $lieu = ModeleLieu::SelectByIdLieu($uneLigne['idLieu']);
-                $hebergement = ModeleLieu::SelectByIdHebergement($uneLigne['idHebergement']);
+                $lieu = ModeleLieu::SelectById($uneLigne['idLieu']);
+                $hebergement = ModeleHebergement::SelectById($uneLigne['idHebergement']);
                 $etape = new Etape($id,$lib,$duree,$lieu,$hebergement);
             }
         $requete->closeCursor();
@@ -62,7 +65,7 @@
     {
         try{
         $cnx=connexpdo('bdExcursion','myparam');
-        $reqChaine="SELECT * FROM Etape ET INNER JOIN EXCURSION EX ON ET.iExcursion = EX.id WHERE EX.id = :id";
+        $reqChaine="SELECT * FROM Etape ET INNER JOIN EXCURSION EX ON ET.idExcursion = EX.id WHERE EX.id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->bindParam(":id",$id,PDO::PARAM_INT);
         $result=$requete->execute();
@@ -71,9 +74,9 @@
         {
             $id = $uneLigne['numOrdre'];
             $lib = $uneLigne['commentaire'];
-            $duree = $uneLigne['commentaire'];
-            $lieu = ModeleLieu::SelectByIdLieu($uneLigne['idLieu']);
-            $hebergement = ModeleLieu::SelectByIdHebergement($uneLigne['idHebergement']);
+            $duree = $uneLigne['dureeEst'];
+            $lieu = ModeleLieu::SelectById($uneLigne['idLieu']);
+            $hebergement = ModeleHebergement::SelectById($uneLigne['idHebergement']);
             $etape = new Etape($id,$lib,$duree,$lieu,$hebergement);
             array_push($lesTypes,$etape);
         }
