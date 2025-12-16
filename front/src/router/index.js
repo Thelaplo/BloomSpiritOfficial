@@ -4,16 +4,16 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import CarteView from '../views/CarteView.vue' 
 import LoginView from '../views/LoginView.vue'
+import InscriptionView from '@/views/InscriptionView.vue'
 
 
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   
-  // ✅ 2. Toutes les routes sont dans un seul tableau 'routes' :
   routes: [
     {
-      // Bonne pratique : utiliser des chemins en minuscules
+     
       path: '/', 
       name: 'login', 
       component: LoginView
@@ -24,10 +24,16 @@ const router = createRouter({
       component: HomeView
     },
     {
-      // Bonne pratique : utiliser des chemins en minuscules
+      
       path: '/carte', 
       name: 'carte', 
       component: CarteView
+    },
+    {
+
+      path: '/inscription', 
+      name: 'inscription', 
+      component: InscriptionView
     },
     
   ]
