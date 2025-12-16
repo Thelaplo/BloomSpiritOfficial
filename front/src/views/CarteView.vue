@@ -181,6 +181,13 @@ export default {
 </script>
 
 <style scoped>
+  /* À mettre en dehors du "scoped" si possible, ou dans App.vue */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+  overflow-x: hidden; /* Empêche le décalage horizontal */
+}
 /* Définition des couleurs principales */
 :root {
   --primary-color: #e91e63; /* Rose/Rouge */
@@ -211,7 +218,7 @@ export default {
 .top-nav-center {
   display: flex;
   justify-content: center;
-  margin: 20px; 
+  margin: 0px; 
 }
 
 /* Styles pour le logo */
@@ -219,11 +226,13 @@ export default {
   height: 45px; 
   width: auto;
   object-fit: contain;
+  right:500px;
 }
 
 /* Styles pour le logo Compte/Connexion (à droite) */
 .account-logo {
   height: 45px; 
+  position: left;
   width: auto;
   object-fit: contain;
 }
@@ -264,7 +273,8 @@ export default {
   display: flex; /* Utilisé pour centrer la barre de recherche */
   justify-content: center;
   align-items: center;
-  padding: 0; 
+  width:100%;
+  overflow: hidden;
 }
 
 .hero-map-overlay {
@@ -283,12 +293,19 @@ export default {
   border-radius: 30px;
   display: flex;
   align-items: center;
-  padding: 10px 20px;
   box-shadow: var(--shadow-subtle);
-  width: 100%;
-  max-width: 600px;
-  z-index: 10; /* Ensure it is above the map (z-index: 1) */
-  position: relative; /* Keep it positioned relative to the container center */
+  
+  /* Largeur contrôlée */
+  width: 90%; 
+  max-width: 500px; 
+  right:500px;
+  
+  /* 🔥 IMPORTANT : On enlève les marges qui pourraient décentrer */
+  margin: 0 auto; 
+  
+  /* On s'assure qu'elle passe au-dessus de la carte */
+  z-index: 10; 
+  position: relative; 
 }
 
 
@@ -313,8 +330,11 @@ export default {
 /* ------------------ Section Filtres et Titres ------------------ */
 
 .filters-and-title-section {
-  padding: 50px 5%;
+  padding: 50px ;
   background-color: var(--bg-light); 
+  width:100%;
+  padding-left:0;
+  
 }
 
 /* RECTANGLE ROSE PLEIN ET CHEVAUCHANT */
@@ -326,12 +346,14 @@ export default {
   background-color: #e783a44e ; /* Couleur Rose (ajustée) */
   color: var(--text-light); 
   
-  padding: 7px 5px; 
+  padding: 10px 20px; 
   
-  margin: -60px auto 30px auto; /* Centre le bloc et le remonte */
+  margin: -60px auto 20px auto; /* Centre le bloc et le remonte */
   border-radius: 8px; 
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
   width: auto;
+  height: 70px;
+  justify-content: center;
 }
 
 .section-logo {
@@ -342,9 +364,9 @@ export default {
 }
 
 .filter-group {
-  display: flex;
+  display: center;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 40px;
 }
 
 .filter-group label {

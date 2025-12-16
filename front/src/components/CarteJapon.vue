@@ -1,6 +1,5 @@
 <template>
   <div class="map-container">
-    <h2>Dynamic Map of Japan</h2>
 
     <l-map
       :zoom="initialZoom"
@@ -43,6 +42,7 @@ const japanBounds = ref([
 /* It is crucial for Leaflet to know the height of its container. */
 .map-container {
   width: 100%;
+  position: center;
   height: 600px; /* Adjust this value as needed */
   border: 1px solid #ccc;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
