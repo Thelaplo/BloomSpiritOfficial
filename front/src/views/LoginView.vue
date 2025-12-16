@@ -7,8 +7,6 @@
     <div class="form-side">
       <div class="login-card">
         
-        <h1 class="login-title">Connexion</h1>
-        
         <form @submit.prevent="handleLogin" class="login-form">
           
           <div class="form-group">
@@ -32,7 +30,7 @@
           </p>
           
           <div class="action-buttons">
-              <button type="submit" class="login-button">SE CONNECTER</button>
+              <router-link to="/login" class="login-button">SE CONNECTER</router-link>
               <router-link to="/register" class="register-button">S'INSCRIRE</router-link>
           </div>
           
@@ -71,7 +69,11 @@ export default {
   --background-pink: #fbe6ec; /* Le rose clair du côté formulaire */
   --text-dark: #333;
 }
-/* Importez ici vos polices (Inter, Judson, etc.) */
+/* POLICE*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
 
 
 /* ----------------------------------- */
@@ -82,12 +84,13 @@ export default {
   display: flex;
   min-height: 100vh;
   width: 100vw;
+  background-color: rgb(232, 202, 238);
 }
 
 /* 2. CÔTÉ IMAGE (50% à gauche) */
 .image-side {
   width: 50%;
-  background-image: url('/public/img/tokyo-night-street.jpg'); /* 🔥 Remplacez par le chemin de votre image */
+  background-image: url('/public/img/login.jpg'); /* 🔥 Remplacez par le chemin de votre image */
   background-size: cover;
   background-position: center;
 }
@@ -107,13 +110,13 @@ export default {
 .form-side::before {
     content: '連'; /* Le caractère japonais (à ajuster si vous en avez un autre) */
     position: absolute;
-    top: 50px;
-    right: -20px;
+    top: 300px;
+    right: 25%;
     font-size: 250px;
     font-family: Arial, sans-serif; /* Utilisez une police qui supporte le CJK si possible */
-    color: rgba(255, 255, 255, 0.5); /* Blanc semi-transparent */
+    /* color: rgba(255, 255, 255, 0.5); Blanc semi-transparent */
     /* Vous pouvez utiliser une couleur rose très claire si le fond est blanc */
-    color: rgba(255, 192, 203, 0.4); 
+    color: rgba(223, 105, 124, 0.4); 
     transform: rotate(-10deg);
     line-height: 1;
     z-index: 1;
@@ -126,6 +129,7 @@ export default {
   width: 100%;
   max-width: 450px;
   z-index: 2; /* S'assure qu'il est au-dessus du caractère japonais */
+  font-family: 'Lora', serif;
 }
 
 .login-title {
@@ -164,7 +168,8 @@ export default {
 
 /* 7. LIEN OUBLIÉ ET BOUTONS */
 .forgot-password {
-    text-align: right;
+    text-align: left;
+    font-family: 'Kalam', cursive;
     font-size: 0.85em;
     margin-top: -10px;
     margin-bottom: 20px;
@@ -174,29 +179,42 @@ export default {
   color: var(--primary-color);
   text-decoration: underline; /* Comme sur la maquette */
 }
-
+/*----------------------------------------------------*/ 
+/*--------------LOGIN et INSCRIPTION------------------*/ 
+/*----------------------------------------------------*/ 
 .action-buttons {
     display: flex;
     gap: 20px; /* Espace entre les deux boutons */
     margin-top: 25px;
+    color : rgb(0, 0, 0);
 }
 
-.login-button, .register-button {
-  flex-grow: 1;
-  padding: 10px;
-  border: 2px solid var(--primary-color); 
-  border-radius: 15px; /* Bords arrondis */
-  font-size: 0.9em;
+ .login-button, .register-button {
+font-family: 'Lora', serif;
   font-weight: 700;
-  text-align: center;
+  font-style: italic;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  flex: 1;
+  padding: 12px 0;
+  border-radius: 0; /* Rectangle parfait */
+  /* Force le remplissage à etre en blanc */
+  background-color: #ffffff !important; 
+  color: #000000 !important;
+  border: 1px solid #ffffff; 
+  
   cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+  display: inline-block;
   text-decoration: none;
-}
+} 
 
 /* Style du bouton SE CONNECTER (Rempli) */
 .login-button {
   background-color: var(--primary-color);
-  color: white;
+  color: rgb(0, 0, 0);
+
 }
 
 /* Style du bouton S'INSCRIRE (Contour) */
