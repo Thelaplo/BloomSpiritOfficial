@@ -34,7 +34,7 @@ const router = createRouter({
       path: '/detail/:id',
       name: 'detail', 
       component: DetailView
-    }
+    },
     {
       path: '/CRUD',
       name: 'CRUD',
