@@ -3,29 +3,7 @@
     <header class="hero-section">
       <div class="hero-image-container">
 
-        <div class="header-top-bar">
-          <nav class="top-nav-center">
-            <div class="nav-rectangle-group">
-              <router-link to="/excursions" class="nav-link">Excursion</router-link>
-              
-              <span class="separator">|</span>
-              
-              <router-link to="/carte" class="nav-link">Carte</router-link>
-              
-              <span class="separator">|</span>
-              
-              <router-link to="/contact" class="nav-link">Contactez-nous</router-link>
-            </div>
-          </nav>
-        <router-link to="/" class="logo-link">
-         <img src="/public/img/BloomSpirit.png" alt="Bloom Spirit Logo" class="site-logo">
-        </router-link>
-
-          <a href="#" class="account-logo-link">
-            <img src="/public/img/Compte.png" alt="Compte" class="account-logo">
-          </a>
-
-        </div>
+        <TheHeader/>
         
         <router-link to="/carte" class="carte-button-wrapper">
             <img src="/public/img/fleur.png" alt="Carte" class="carte-fleur-image">
@@ -62,8 +40,13 @@
 import { voyages } from '../data.js'; // ✅ Importation du tableau de données centralisé
 import card from '../components/card.vue';
 import cardevent from '../components/cardevent.vue';
+import TheHeader from '@/components/TheHeader.vue';
 
 export default {
+  components: {
+    cardevent,
+    TheHeader
+  },
   data() {
     return {
       voyage: {} // L'objet voyage sera rempli au chargement
@@ -411,7 +394,7 @@ export default {
 
 /* ------------------ Section Populaire - Cartes ------------------ */
 .destination-cards-container {
-  display: auto;
+  display: flex;
   justify-content: center;
   gap: 25px;
   flex-wrap: wrap;

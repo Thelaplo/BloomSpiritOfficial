@@ -1,25 +1,7 @@
 <template>
   <div class="detail-page-container" v-if="voyage.id">
     <header class="header-container">
-      <div class="header-top-bar">
-          <nav class="top-nav-center">
-             <router-link to="/" class="nav-rectangle-group">
-              <span>Excursion</span>
-              <span class="separator">|</span>
-              <span>Carte</span>
-              <span class="separator">|</span>
-              <span>Contactez-nous</span>
-            </router-link>
-          </nav>
-          <router-link to="/" class="logo-link">
-            <img src="/public/img/BloomSpirit.png" alt="Bloom Spirit Logo" class="site-logo">
-          </router-link>
-
-          <a href="#" class="account-logo-link">
-            <img src="/public/img/Compte.png" alt="Compte" class="account-logo">
-          </a>
-
-        </div>
+      <TheHeader/>
       <div class="summary-info-block">
           <h1>Histoire de {{ voyage.title }} :</h1>
           <p class="header-description-text">
@@ -106,9 +88,13 @@
     </div>
 </template>
 <script>
+import TheHeader from '@/components/TheHeader.vue';
 import { voyages } from '../data.js';
 
 export default {
+  components: {
+    TheHeader
+  },
   data() {
     return {
       voyage: {}

@@ -198,7 +198,7 @@ const allExcursions = ref([
   justify-content: space-between;
   align-items: center;
   margin: 30px 0 20px;
-  padding-left: ;
+  padding-left:0 ;
 }
 /* --- BARRE DE RECHERCHE--- */
 .search-bar {

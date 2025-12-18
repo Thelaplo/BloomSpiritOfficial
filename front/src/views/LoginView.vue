@@ -1,6 +1,6 @@
 <template>
   <div class="login-page-container">
-    
+    <TheHeader/>
     <div class="image-side">
         </div>
     
@@ -42,7 +42,11 @@
 </template>
 
 <script>
+  import TheHeader from '@/components/TheHeader.vue';
 export default {
+  components: {
+    TheHeader
+  },
   data() {
     return {
       email: '',
