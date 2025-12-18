@@ -1,16 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import HomeView from '../views/HomeView.vue'
-<<<<<<< HEAD
+
 import CarteView from '../views/CarteView.vue'
-import DetailView from '../views/DetailView.vue' // ✅ Import ajouté
-=======
-import CarteView from '../views/CarteView.vue' 
+import DetailView from '../views/DetailView.vue'
+
 import LoginView from '../views/LoginView.vue'
 import InscriptionView from '@/views/InscriptionView.vue'
+import CRUDView from '../views/CRUDView.vue'
 
-
->>>>>>> LoginView
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,29 +26,25 @@ const router = createRouter({
       component: HomeView
     },
     {
-<<<<<<< HEAD
-=======
-      
->>>>>>> LoginView
       path: '/carte', 
       name: 'carte', 
       component: CarteView
     },
     {
-<<<<<<< HEAD
-      path: '/detail/:id', // ✅ Route dynamique vers les détails
+      path: '/detail/:id',
       name: 'detail', 
       component: DetailView
     }
-   
-=======
-
+    {
+      path: '/CRUD',
+      name: 'CRUD',
+      component: CRUDView
+    },
+    {
       path: '/inscription', 
       name: 'inscription', 
       component: InscriptionView
-    },
-    
->>>>>>> LoginView
+    }
   ]
 })
 

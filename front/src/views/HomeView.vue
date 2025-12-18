@@ -5,17 +5,21 @@
 
         <div class="header-top-bar">
           <nav class="top-nav-center">
-             <router-link to="/carte" class="nav-rectangle-group">
-              <span>Excursion</span>
+            <div class="nav-rectangle-group">
+              <router-link to="/excursions" class="nav-link">Excursion</router-link>
+              
               <span class="separator">|</span>
-              <span>Carte</span>
+              
+              <router-link to="/carte" class="nav-link">Carte</router-link>
+              
               <span class="separator">|</span>
-              <span>Contactez-nous</span>
-            </router-link>
+              
+              <router-link to="/contact" class="nav-link">Contactez-nous</router-link>
+            </div>
           </nav>
-          <router-link to="/" class="logo-link">
-            <img src="/public/img/BloomSpirit.png" alt="Bloom Spirit Logo" class="site-logo">
-          </router-link>
+        <router-link to="/" class="logo-link">
+         <img src="/public/img/BloomSpirit.png" alt="Bloom Spirit Logo" class="site-logo">
+        </router-link>
 
           <a href="#" class="account-logo-link">
             <img src="/public/img/Compte.png" alt="Compte" class="account-logo">
@@ -48,14 +52,16 @@
     </section>
     
     <section class="autumn-offers-section">
-      <h2>Offres d'Automne</h2>
-      <p>Découvrez nos meilleures offres pour la saison des feuilles rouges!</p>
+      <h2>Les Offres du moment</h2>
+      <cardevent />
     </section>
   </div>
 </template>
 
 <script>
 import { voyages } from '../data.js'; // ✅ Importation du tableau de données centralisé
+import card from '../components/card.vue';
+import cardevent from '../components/cardevent.vue';
 
 export default {
   data() {
@@ -299,24 +305,34 @@ export default {
 }
 
 /* Styles pour le RECTANGLE DE NAVIGATION GROUPÉ */
+/* Le conteneur reste le rectangle avec la bordure */
 .nav-rectangle-group {
-  color: white;
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
+  border: 2px solid rgb(225, 161, 161);
+  border-radius: 25px;
+  background-color: rgba(203, 147, 175, 0.616); /* Optionnel : fond léger */
+}
+
+/* Style des liens individuels */
+.nav-link {
+  color: rgb(203, 71, 93);
   text-decoration: none;
   font-weight: 500;
   font-size: 0.9em;
-  padding: 8px 15px;
-  white-space: nowrap;
-
-  border: 2px solid white;
-  border-radius: 20px;
-
-  transition: background-color 0.3s, color 0.3s;
+  transition: color 0.3s;
 }
 
-/* Séparateurs entre les liens (Excursion | Carte | Contactez-nous) */
+/* Effet au survol sur un mot précis */
+.nav-link:hover {
+  color: #333;
+}
+
 .separator {
-  margin: 0 10px;
-  opacity: 0.7;
+  margin: 0 15px;
+  color: rgb(225, 161, 161);
+  pointer-events: none; /* Pour qu'on ne puisse pas cliquer sur le trait */
 }
 
 /* Effet de survol */
@@ -395,7 +411,7 @@ export default {
 
 /* ------------------ Section Populaire - Cartes ------------------ */
 .destination-cards-container {
-  display: flex;
+  display: auto;
   justify-content: center;
   gap: 25px;
   flex-wrap: wrap;

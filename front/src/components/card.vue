@@ -1,100 +1,93 @@
 <template>
-    <div class="destination-card tokyo-card">
-          <div class="city-overlay">Tokyo</div>
-    </div>
-    <div class="destination-card kyoto-card">
-          <div class="city-overlay">Kyoto</div>
+  <div class="destination-cards-container">
+    
+    <div 
+      v-for="city in cities" 
+      :key="city.id" 
+      class="destination-card"
+      :style="{ backgroundImage: `url(${city.image})` }"
+    >
+      <div class="city-overlay">
+        <span class="event-tag">Incontournable</span>
+        <div class="city-title">{{ city.name }}</div>
+      </div>
     </div>
 
-    <div class="destination-card okinawa-card">
-          <div class="city-overlay">Okinawa</div>
-    </div>
-
+  </div>
 </template>
+
 <script setup>
-    const String = '';
+import { ref } from 'vue';
+
+const cities = ref([
+  { id: 1, name: 'Tokyo', image: '/img/tokyo.jpg' },
+  { id: 2, name: 'Kyoto', image: '/img/kyoto.jpg' },
+  { id: 3, name: 'Okinawa', image: '/img/nara.jpg' } // Tu peux changer pour okinawa.jpg si tu l'as
+]);
 </script>
-<style>
-/* ------------------ Section Populaire - Cartes ------------------ */
+
+<style scoped>
+/* 1. LE CONTENEUR */
 .destination-cards-container {
   display: flex;
   justify-content: center;
   gap: 25px;
   flex-wrap: wrap;
-  padding: 0 20px;
+  padding: 40px 20px;
 }
 
+/* 2. LA CARTE (Design identique aux events) */
 .destination-card {
   width: 320px;
   height: 480px;
   border-radius: 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   background-size: cover;
   background-position: center;
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease;
 }
+
 .destination-card:hover {
     transform: translateY(-10px);
 }
 
-
-/* Images de fond pour chaque carte (VÉRIFIEZ LES CHEMINS !) */
-.tokyo-card    { background-image: url('/public/img/tokyo.jpg'); }
-.kyoto-card    { background-image: url('/public/img/kyoto.jpg'); }
-.okinawa-card  { background-image: url('/public/img/nara.jpg'); } 
-
-
-/* L'overlay contenant le nom de la ville et l'effet de couleur rose en bas */
+/* 3. L'OVERLAY (Dégradé rose premium) */
 .city-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 40px 20px 20px;
+  padding: 50px 20px 25px;
   color: white;
-  font-size: 1.8em;
-  font-weight: bold;
   text-align: left;
-
-  /* Gradient pour simuler l'effet de vague/couleur */
-  background: linear-gradient(
-    to top,
-    rgba(240, 98, 146, 0.8) 0%,
-    rgba(240, 98, 146, 0.4) 40%,
-    transparent 80%
-  );
-
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  /* On utilise le dégradé rose de tes cartes events */
+  background: linear-gradient(to top, 
+    rgba(233, 30, 99, 0.9) 0%, 
+    rgba(233, 30, 99, 0.3) 60%, 
+    transparent 100%);
 }
 
-
-/* ------------------ Media Queries (pour le responsive) ------------------ */
-@media (max-width: 1024px) {
-  .destination-cards-container {
-    gap: 15px;
-  }
-  .destination-card {
-    width: 45%;
-    height: 350px;
-  }
+/* 4. LE TEXTE (Police Lora et Italique) */
+.event-tag {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 5px;
+  opacity: 0.9;
 }
 
+.city-title {
+  font-size: 2.2rem; /* Légèrement plus grand pour les villes */
+  font-weight: bold;
+  font-family: 'Lora', serif; /* Applique la police premium */
+  font-style: italic; /* L'effet stylé des events */
+}
+
+/* RESPONSIVE */
 @media (max-width: 768px) {
-  .hero-image-container {
-    height: 300px;
-  }
-  
-  /* ❌ SUPPRIMÉ : Suppression de la classe .site-logo-center-image non utilisée */
-  
-  .carte-button-wrapper {
-      width: 150px; /* Taille ajustée pour le mobile */
-      height: 150px;
-      top: 85%; /* Ajustement mobile du bouton */
-  }
-
   .destination-cards-container {
     flex-direction: column;
     align-items: center;
@@ -102,7 +95,7 @@
   .destination-card {
     width: 90%;
     max-width: 400px;
-    height: 300px;
+    height: 350px;
   }
 }
 </style>
