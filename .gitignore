@@ -43,3 +43,8 @@ Thumbs.db
 
 # Fichiers de cache pour Tailwind JIT/Autoprefixer
 /.postcss-cache/
+
+/vendor
+.env
+node_modules/
+*.env
