@@ -123,4 +123,14 @@ ul li a:hover {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+@media (max-width: 480px) {
+  .footer-container {
+    grid-template-columns: 1fr; /* Tout sur une colonne */
+    text-align: center;
+  }
+  .footer-social .social-icons {
+    justify-content: center;
+  }
+}
 </style>

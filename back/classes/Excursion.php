@@ -8,6 +8,7 @@ class Excursion
 {
     private string $id;
     private string $nom;
+    private string $image;
     private string $desc;
     private int $duree;
     private string $difficulte;
@@ -17,10 +18,11 @@ class Excursion
     private CategorieExcursion $categorie;
     private array $etapes;
 
-    public function __construct(string $id, string $nom, string $desc, int $duree, string $difficulte, int $nbLimitPers, float $prix, CategorieExcursion $categorie)
+    public function __construct(string $id, string $nom, string $image, string $desc, int $duree, string $difficulte, int $nbLimitPers, float $prix, CategorieExcursion $categorie)
     {
         $this->id = $id;
         $this->nom = $nom;
+        $this->image = $image;
         $this->desc = $desc;
         $this->duree = $duree;
         $this->difficulte = $difficulte;
@@ -39,6 +41,10 @@ class Excursion
     public function GetNom() : string
     {
         return $this->nom;
+    }
+    public function GetImage() : string
+    {
+        return $this->image;
     }
 
     public function GetDesc() : string
@@ -78,7 +84,7 @@ class Excursion
 
     public function GetEtapes() : array
     {
-        return $this->Etapes;
+        return $this->etapes;
     }
 
     public function SetId(string $id) : void
@@ -121,7 +127,7 @@ class Excursion
         $this->typeTransport = $typeTransport;     
     }
 
-    public function SetCategorie(CategorieExcurion $categorie) : void
+    public function SetCategorie(CategorieExcursion $categorie) : void
     {
         $this->categorie = $categorie;
     }

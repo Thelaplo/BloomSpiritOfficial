@@ -1,95 +1,80 @@
 <template>
-  <div class="detail-page-container" v-if="voyage.id">
+  <div class="detail-page-container" v-if="excursion.id">
     <header class="header-container">
-      <TheHeader/>
+      <TheHeader />
       <div class="summary-info-block">
-          <h1>Histoire de {{ voyage.title }} :</h1>
+          <h1>Histoire de {{ excursion.title }} :</h1>
           <p class="header-description-text">
-            {{ voyage.title }} est une grande ville portuaire et un centre économique majeur de l'Ouest du Japon. Elle est connue pour son architecture moderne, sa vie nocturne et la qualité de sa street food.
+            {{ excursion.description }}
           </p>
 
-          <div class="trip-summary-card">
-            <div class="duree-estim"></div>
-              <h2>Promenade à {{ voyage.title }}</h2>
-            <div class="details-row">
-              <p>Durée estimée : {{ voyage.duration }} jours</p>
-              <p class="price-info">À partir de {{ formatCurrency(voyage.price) }} / p</p>
-            </div>
-            <div class="action-buttons">
-              <button class="contact-button">Contacter l'agence</button>
-              <button class="favorite-button">♡ ajouter aux favoris</button>
-            </div>
+          <div class="sidebar">
+            <h1> </h1>
           </div>
-          
+
+          <div class="trip-summary-card">
+              <h2>Promenade à {{ excursion.title }}</h2>
+            <div class="details-row">
+              <p>Durée estimée : {{ excursion.duration }} jours</p>
+              <p class="price-info">À partir de {{ formatCurrency(excursion.price) }} / p</p>
+            </div>
+          <div class="action-buttons">
+            <button class="contact-button" @click="contactAgency">
+            Contacter l'agence
+            </button>
+
+          <button class="favorite-button" @click="toggleFavorite">
+            {{ isFavorite ? '💓' : '♡' }} ajouter aux favoris
+          </button>
       </div>
-      
-      <div class="hero-image-absolute" :style="{ backgroundImage: 'url(' + voyage.imageUrl + ')' }">
-          <div class="japanese-title">{{ getJapaneseTitle(voyage.title) }}</div>
+          </div>
       </div>
-      
+
+      <div class="hero-image-absolute" :style="{ backgroundImage: `url(${excursion.imageUrl})` }">
+        <div class="japanese-title">{{ getJapaneseTitle(excursion.title) }}</div>
+      </div>
     </header>
 
     <div class="content-wrapper">
-      
       <div class="main-info-column">
-          
         <section class="itinerary-section timeline-section">
             <ul class="itinerary-timeline">
-                <li v-for="(step, index) in voyage.timeline_steps" :key="index">
-                    
+                <li v-for="(etape, index) in excursion.etapes" :key="index">
                     <div class="step-alternating-content">
-                        
-                        <span class="step-label">Jour {{ step.day }} - {{ step.label }}</span>
-                        
+                        <span class="step-label">Jour {{ etape.day }} - {{ etape.label }}</span>
                         <img src="/public/img/rondRose.png" alt="Etape" class="timeline-dot-img">
-                        
                     </div>
-                    
                 </li>
             </ul>
         </section>
+      </div>
+      
+      <!-- <div class="side-info-column">
+          <div class="side-info-block pink-block">
+              <h3>Détails</h3>
+              <p>Type : {{ excursion.difficulte }}</p> <p>Durée : {{ excursion.duration }} jours</p>
+          </div>
+      </div> -->
+    </div>
+  </div>
+  <!-- <div v-else class="loading-message">Chargement de l'excursion...</div>
         <section class="map-section">
             <h2>Localisation de la Région</h2>
             
-            <img :src="voyage.mapImageUrl" 
-                alt="Carte de la région de {{ voyage.title }}" 
+            <img :src="excursion.mapImageUrl" 
+                alt="Carte de la région de {{ excursion.nom }}" 
                 class="region-map-image">
                 
             <p class="map-note">Zoom sur la Region </p>
-        </section>
+        </section> -->
 
-      </div>
+ 
       
-      <div class="side-info-column">
-          
-          <div class="side-info-block pink-block">
-              <h3>Prochaine date</h3>
-              <p>Départ : Samedi 20 Mars</p>
-              <p>Durée : {{ voyage.duration }} jours</p>
-          </div>
 
-          
-          
-          <!-- <div class="side-info-block white-block contact-block">
-              <h3>Contactez-nous</h3>
-              <form @submit.prevent="submitContact">
-                  <input type="text" placeholder="Nom Complet" required>
-                  <input type="email" placeholder="Email" required>
-                  <textarea placeholder="Votre message..."></textarea>
-                  <button type="submit" class="submit-contact-button">Envoyer</button>
-              </form>
-          </div>
-           -->
-      </div>
-    </div>
-  </div>
-   <div v-else class="loading-message">
-        Chargement des détails du voyage... (ou voyage non trouvé)
-    </div>
 </template>
 <script>
 import TheHeader from '@/components/TheHeader.vue';
-import { voyages } from '../data.js';
+import { h } from 'vue';
 
 export default {
   components: {
@@ -97,63 +82,115 @@ export default {
   },
   data() {
     return {
-      voyage: {}
+      excursion: {},   // Contient les données de l'API
+      isFavorite: false // État du bouton coeur (pour le changement visuel)
     };
   },
-  
-  // Utilise un watcher pour charger les données à l'ouverture de la page et si l'ID change
   watch: {
     '$route.params.id': {
       immediate: true, 
-      handler() {
-        this.loadVoyageData();
+      handler(newId) {
+        this.loadExcursion(newId);
       }
     }
   },
+ methods: {
+    async loadExcursion(id) {
+      try {
+        const response = await fetch(`http://localhost:8000/api_detail.php?id=${id}`);
+        this.excursion = await response.json();
 
-  methods: {
-    loadVoyageData() {
-      const voyageId = parseInt(this.$route.params.id);
-      const foundVoyage = voyages.find(v => v.id === voyageId);
-
-      if (foundVoyage) {
-        this.voyage = foundVoyage;
-      } else {
-        this.voyage = {}; 
-        // Si non trouvé, on pourrait rediriger: this.$router.push({ name: 'carte' });
+        const userData = JSON.parse(localStorage.getItem('user'));
+        if (userData && id) {
+            // Force la conversion en nombre de l'ID passé à l'API
+            this.checkIfFavorite(userData.login, Number(id));
+        }
+      } catch (error) {
+        console.error("Erreur chargement :", error);
       }
     },
     
-    // Méthode pour formater le prix en Euro
     formatCurrency(value) {
-      return new Intl.NumberFormat('fr-FR', {
-        style: 'currency',
-        currency: 'EUR',
-        minimumFractionDigits: 0
-      }).format(value);
+      if (!value) return "0,00 €";
+      return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(value);
     },
-    
-    // NOUVELLE MÉTHODE : Pour afficher le caractère japonais (Emoji simple pour la démo)
-    getJapaneseTitle(title) {
-        // Mappage simple des titres aux caractères japonais/emojis correspondants
-        const map = {
-            'Torii Miyajima': '宮島', // 🔥 CARACTÈRE CORRECT
-            'Shirakawa-go': '白川郷',
-            'Chute de Nachi': '那智',
-            'Nara': '奈良',
-            'Miyako-jima': '宮古島',
-            'Osaka': '大阪',
-            'Kyoto': '京都',
-            'Tokyo': '東京',
-            'Kumejima': '久米島'
-        };
-        const simpleTitle = title.split(' ')[0];
-        return map[title] || map[simpleTitle] || title.charAt(0);
+    getJapaneseTitle(nom) {
+    if (!nom) return "";
+    const map = { 
+        'Torii Miyajima': '宮島', 
+        'Nara': '奈良', 
+        'Shirakawa-go': '白川郷',
+        'Chute de Nachi': '那智滝',
+        'Miyako-jima': '宮古島',
+        'Taikodani Inari-jinja': '太鼓谷',
+        'Kumejima': '久米島',
+        'Shirakawa-go (Hiver)': '白川郷',
+        'Alpes Japonaises': '日本ア',
+        'Le Japon sous la neige': '雪',
+        'Trésors du Japon': '宝',
+        'L\'archipel aux trésors': '島'
+    };
+
+    return map[nom] || nom.charAt(0);
     },
-    
-    submitContact() {
-        // Logique de soumission du formulaire ici
-        alert("Formulaire de contact envoyé (Simulation)!");
+
+    // --- LES NOUVELLES MÉTHODES POUR TES BOUTONS ---
+    contactAgency() {
+      // Ouvre le client mail de l'utilisateur avec un sujet pré-rempli
+      const subject = `Demande d'information : ${this.excursion.title}`;
+      window.location.href = `mailto:contact@bloomspirit.com?subject=${encodeURIComponent(subject)}`;
+    },
+
+    async toggleFavorite() {
+      const userStr = localStorage.getItem('user');
+      if (!userStr) {
+        alert("Connectez-vous pour ajouter des favoris !");
+        return;
+      }
+      const userData = JSON.parse(userStr);
+
+      // On récupère l'ID directement depuis la route pour éviter les erreurs de mapping
+      const excursionId = Number(this.$route.params.id); 
+
+      if (!excursionId) {
+        console.error("ID excursion introuvable");
+        return;
+      }
+      const idToSend = Number(this.excursion.id || this.$route.params.id);
+
+      const payload = {
+        login: userData.login,
+        idExcursion: idToSend // Vérifie que c'est bien "idExcursion" ici
+      };
+
+      try {
+        const response = await fetch('http://localhost:8000/api_toggle_favoris.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            login: userData.login,
+            idExcursion: excursionId // Envoie bien l'ID en nombre
+          })
+        });
+        
+        const result = await response.json();
+        
+        // Ton PHP renvoie "added" ou "removed"
+        if (result.status === 'added') {
+            this.isFavorite = true;
+        } else if (result.status === 'removed') {
+            this.isFavorite = false;
+        }
+      } catch (error) {
+        console.error("Erreur technique favoris:", error);
+      }
+    },
+    async checkIfFavorite(login, idExcursion) {
+    // Tu peux créer une petite API api_check_favoris.php ou utiliser toggle avec un mode "check"
+    // Pour l'instant, on peut aussi le faire via une requête simple
+        const response = await fetch(`http://localhost:8000/api_check_favoris.php?login=${login}&idExcursion=${idExcursion}`);
+        const result = await response.json();
+        this.isFavorite = result.isFavorite;
     }
   }
 }
@@ -242,23 +279,23 @@ export default {
 /* ----------------------------------- */
 /* Styles du Caractère Japonais (Pas de fond) */
 /* ----------------------------------- */
-
 .japanese-title {
-    position: absolute;
-    top: 150px; 
-    left: -20px; 
-    font-size: 2.5em; 
-    
-    /* 🔥 CORRECTION CLÉ : Retirer le fond blanc et l'ombrage */
-    background-color: transparent; 
-    box-shadow: none; 
-    
-    color: var(--primary-color); /* La couleur du caractère */
-    
-    padding: 15px 10px;
-    border-radius: 10px 0 0 10px; 
-    z-index: 10; 
-    line-height: 1;
+  position: absolute;
+  top: 155px; 
+  left: -57px; 
+  font-size: 100px; 
+  max-width: 1%;
+  
+  background-color: transparent; 
+  box-shadow: none; 
+  
+  color: #fb9bbb; 
+  
+  padding: 15px 10px;
+  border-radius: 10px 0 0 10px; 
+  z-index: 10; 
+  line-height: 1;
+  font-family:"Judson", serif;
 }
 /* ------------------------------------------- */
 /* 1. HEADER / BANNER (Arrangement du Figma)  */
@@ -269,9 +306,9 @@ export default {
   min-height: 400px; 
   background-color: #f7f6f6; 
   position: relative; 
-  padding-bottom: 20px; 
-  min-height: 500px;
-  max-width: 120%; 
+  padding-bottom: 20px;
+  min-height: 600px;
+  max-width: 150%; 
   margin: 0 auto;
 }
 
@@ -279,10 +316,24 @@ export default {
 .summary-info-block {
     width: 60%; 
     padding: 40px;
-    padding-top: 60px; 
+    padding-top: 95px; 
     position: relative; 
-    z-index: 10;
+    z-index: 15;
     font-family: "Judson",serif;
+}
+
+.sidebar {
+
+position: fixed; 
+  right: 0;         
+  top: 0;             
+  width: 120px;      
+  height: 100vh;     
+  background-color: #FFC7D8;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.2); 
 }
 
 .summary-info-block h1 {
@@ -297,7 +348,7 @@ export default {
     font-size: 0.95em;
     line-height: 1.5;
     margin-bottom: 50px;
-    max-width: 70%; /* Pour que le texte n'aille pas trop loin */
+    max-width: 60%; /* Pour que le texte n'aille pas trop loin */
     font-family: "Judson", sans-serif;
 }
 
@@ -313,28 +364,11 @@ export default {
     z-index: 5;
     border-radius: 0 0 0 50px; 
     box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+    justify-content: end;
+    margin-right: 110px;
 }
 
-/* 1.3 Caractère Japonais (inchangé) */
-.japanese-title {
-    position: absolute;
-    top: 75px; 
-    left: -57px; 
-    font-size: 100px; 
-    max-width: 1%;
-    
-    /* 🔥 CORRECTION CLÉ : Retirer le fond blanc et l'ombrage */
-    background-color: transparent; 
-    box-shadow: none; 
-    
-    color: #fb9bbb; /* La couleur du caractère */
-    
-    padding: 15px 10px;
-    border-radius: 10px 0 0 10px; 
-    z-index: 10; 
-    line-height: 1;
-    font-family:"Judson", serif;
-}
+
 
 /* 1.4 Carte de résumé (Bloc d'information rose du Figma) */
 
@@ -405,6 +439,8 @@ export default {
     width: 170px; /* Prend juste la largeur nécessaire */
     margin: 0 auto; /* Centrer dans l'espace disponible */
     padding: 5px 0;
+    cursor: pointer;
+    transition: opacity 0.2s;
     
 }
 
@@ -416,7 +452,12 @@ export default {
     border-radius: 5px;
     margin: 5px auto;
     width: 170px;
-    
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.contact-button:active, .favorite-button:active {
+    transform: scale(0.95);
 }
 
 
@@ -644,23 +685,43 @@ export default {
 
 /* Responsive */
 @media (max-width: 900px) {
-  .content-wrapper {
-    grid-template-columns: 1fr;
+  .header-container {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
   }
-  
+  .summary-info-block {
+    width: 100%;
+    padding: 80px 20px 20px;
+  }
+  .hero-image-absolute {
+    position: relative; /* L'image reprend sa place dans le flux */
+    width: 100%;
+    height: 300px;
+    margin-right: 0;
+    border-radius: 20px;
+  }
   .trip-summary-card {
-    top: 50px;
+    width: 100%;
+    max-width: none;
+    margin: 20px 0;
+  }
+  .content-wrapper {
+    grid-template-columns: 1fr; /* Une seule colonne pour l'itinéraire */
+  }
+  .sidebar {
+    display: none; /* On cache la barre rose latérale fixe sur mobile */
+  }
+  .step-alternating-content {
+    grid-template-columns: 1fr;
+    text-align: left !important;
+    padding-left: 40px;
+  }
+  .itinerary-timeline::after {
+    left: 20px; /* On déplace la ligne de l'itinéraire sur le côté */
+  }
+  .timeline-dot-img {
     left: 20px;
-    right: 20px;
-    width: auto;
-  }
-  
-  .japanese-title {
-    display: none; 
-  }
-  
-  .detail-hero-header {
-      height: 600px; 
   }
 }
 </style>

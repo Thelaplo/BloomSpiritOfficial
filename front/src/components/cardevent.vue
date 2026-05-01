@@ -1,53 +1,19 @@
 <template>
-  <div class="destination-cards-container">
+  <div class="destination-card" :style="{ backgroundImage: `url(${event.image})` }">
+    <div class="event-badge" v-if="event.badge">{{ event.badge }}</div>
     
-    <div 
-      v-for="event in events" 
-      :key="event.id" 
-      class="destination-card"
-      :class="event.class"
-    >
-      <div class="event-badge" v-if="event.badge">{{ event.badge }}</div>
-      
-      <div class="city-overlay">
-        <span class="event-tag">{{ event.tag }}</span>
-        <div class="event-title">{{ event.title }}</div>
-        <p class="event-promo" v-if="event.promo">{{ event.promo }}</p>
-      </div>
+    <div class="city-overlay">
+      <span class="event-tag">{{ event.tag }}</span>
+      <div class="event-title">{{ event.title }}</div>
+      <p class="event-promo" v-if="event.promo">{{ event.promo }}</p>
     </div>
-
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
-const events = ref([
-  {
-    id: 1,
-    title: 'Chasse aux Érables',
-    tag: 'Automne 2025',
-    badge: 'Offre d\'Automne',
-    promo: '-20% sur les circuits',
-    class: 'momiji-card' // Utilisé pour l'image en CSS
-  },
-  {
-    id: 2,
-    title: 'Festival de la Neige',
-    tag: 'Hiver 2025',
-    badge: 'Exclusivité',
-    promo: 'Pass Expo inclus',
-    class: 'sapporo-card'
-  },
-  {
-    id: 3,
-    title: 'Sources Thermales',
-    tag: 'Expérience Zen',
-    badge: 'Bien-être',
-    promo: 'Nuitée offerte',
-    class: 'onsen-card'
-  }
-]);
+defineProps({
+  event: Object
+});
 </script>
 <style scoped>
 .destination-cards-container {

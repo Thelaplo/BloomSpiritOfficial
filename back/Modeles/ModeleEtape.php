@@ -11,14 +11,14 @@
     {
         try{
         $Etapes = array();
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="SELECT * FROM Etape";
         $requete=$cnx->prepare($reqChaine);
         $result=$requete->execute();
         while($uneLigne=$requete->fetch(PDO::FETCH_ASSOC)) 
             {
                 $id = $uneLigne['numOrdre'];
-                $lib = $uneLigne['commentaire'];
+                $lib = $uneLigne['description'];
                 $duree = $uneLigne['dureeEst'];
                 $lieu = ModeleLieu::SelectById($uneLigne['idLieu']);
                 $hebergement = ModeleHebergement::SelectById($uneLigne['idHebergement']);
@@ -37,7 +37,7 @@
     public static function SelectById(int $id, int $id2) : Etape
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="SELECT * FROM Etape WHERE idExcursion = :id AND numOrdre = :id2";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$id,PDO::PARAM_STR);
@@ -46,8 +46,8 @@
         while($uneLigne=$requete->fetch(PDO::FETCH_ASSOC)) 
             {
                 $id = $uneLigne['numOrdre'];
-                $lib = $uneLigne['commentaire'];
-                $duree = $uneLigne['commentaire'];
+                $lib = $uneLigne['description'];
+                $duree = $uneLigne['description'];
                 $lieu = ModeleLieu::SelectById($uneLigne['idLieu']);
                 $hebergement = ModeleHebergement::SelectById($uneLigne['idHebergement']);
                 $etape = new Etape($id,$lib,$duree,$lieu,$hebergement);
@@ -64,7 +64,7 @@
     public static function SelectEtapeByIdExcursion(int $id) : array
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="SELECT * FROM Etape ET INNER JOIN EXCURSION EX ON ET.idExcursion = EX.id WHERE EX.id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->bindParam(":id",$id,PDO::PARAM_INT);
@@ -73,7 +73,7 @@
         while($uneLigne=$requete->fetch(PDO::FETCH_ASSOC)) 
         {
             $id = $uneLigne['numOrdre'];
-            $lib = $uneLigne['commentaire'];
+            $lib = $uneLigne['description'];
             $duree = $uneLigne['dureeEst'];
             $lieu = ModeleLieu::SelectById($uneLigne['idLieu']);
             $hebergement = ModeleHebergement::SelectById($uneLigne['idHebergement']);
@@ -90,7 +90,7 @@
     public static function DeleteById(int $id, int $id2) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="DELETE FROM Etape WHERE idExcursion = :id AND numOrdre = :id2";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':idExcursion',$id,PDO::PARAM_INT);
@@ -107,7 +107,7 @@
     public static function Update(Etape $Etape) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="UPDATE Etape SET numOrdre = :id, commentaire = :lib, dureeEst = :duree, idLieu = :idLieu, idHebergement = :idHebergement WHERE numOrdre = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$Etape->GetNumero(),PDO::PARAM_STR);
@@ -127,7 +127,7 @@
     public static function Insert(Etape $Etape) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="INSERT INTO Etape (numOrdre,commentaire,dureeEst,idLieu,idHebergemnt) VALUES (:id,:lib,:duree,:idLieu,:idHebergement)";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$Etape->GetNumero(),PDO::PARAM_STR);

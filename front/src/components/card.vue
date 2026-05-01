@@ -1,29 +1,20 @@
 <template>
-  <div class="destination-cards-container">
-    
-    <div 
-      v-for="city in cities" 
-      :key="city.id" 
-      class="destination-card"
-      :style="{ backgroundImage: `url(${city.image})` }"
-    >
+  <router-link :to="`/detail/${id}`" class="card-link">
+    <div class="destination-card" :style="{ backgroundImage: `url(${image})` }">
       <div class="city-overlay">
         <span class="event-tag">Incontournable</span>
-        <div class="city-title">{{ city.name }}</div>
+        <div class="city-title">{{ name }}</div>
       </div>
     </div>
-
-  </div>
+  </router-link>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
-const cities = ref([
-  { id: 1, name: 'Tokyo', image: '/img/tokyo.jpg' },
-  { id: 2, name: 'Kyoto', image: '/img/kyoto.jpg' },
-  { id: 3, name: 'Okinawa', image: '/img/nara.jpg' } // Tu peux changer pour okinawa.jpg si tu l'as
-]);
+defineProps({
+  id: [Number, String], // On récupère l'ID pour le lien
+  name: String,         // Le nom de la ville (ex: Tokyo)
+  image: String         // Le chemin de l'image (ex: /img/tokyo.jpg)
+});
 </script>
 
 <style scoped>

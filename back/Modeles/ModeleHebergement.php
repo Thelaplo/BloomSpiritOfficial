@@ -10,7 +10,7 @@
     {
         try{
         $hebergement = array();
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="SELECT * FROM Hebergement";
         $requete=$cnx->prepare($reqChaine);
         $result=$requete->execute();
@@ -40,7 +40,7 @@
     public static function SelectById(int $id) : Hebergement
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="SELECT * FROM Hebergement WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$id,PDO::PARAM_INT);
@@ -51,7 +51,7 @@
                 $lib = $uneLigne['nom'];
                 $type = $uneLigne['type'];
                 $etoiles = $uneLigne['etoiles'];
-                $adr = $uneLigne['adresse'];
+                $adr = $uneLigne['rue'];
                 $img = $uneLigne['image'];
                 $cp = $uneLigne['cp'];
                 $ville = $uneLigne['ville'];
@@ -70,7 +70,7 @@
     public static function DeleteById(int $id) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="DELETE FROM Hebergement WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$id,PDO::PARAM_STR);
@@ -86,7 +86,7 @@
     public static function Update(Hebergement $hebergement) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="UPDATE Hebergement SET id = :id, nom = :lib, type = :type, etoiles = CONVERT(:etoiles, DECIMAL), adresse = :adr, image = :img, cp = :cp, ville = :ville, capacite = :cap WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$hebergement->GetId(),PDO::PARAM_INT);
@@ -110,7 +110,7 @@
     public static function Insert(Hebergement $hebergement) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="INSERT INTO Hebergement VALUES (:id, :lib, :type, CONVERT(:etoiles, DECIMAL), :adr, :img, :cp, :ville, :cap)";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$hebergement->GetId(),PDO::PARAM_INT);

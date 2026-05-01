@@ -1,28 +1,20 @@
 <template>
   <div class="login-page-container">
     <TheHeader/>
-    <div class="image-side">
-        </div>
+    <div class="image-side"></div>
     
     <div class="form-side">
       <div class="login-card">
-        
         <form @submit.prevent="handleLogin" class="login-form">
           
           <div class="form-group">
-            <label for="email">E-Mail</label>
-            <input type="text" 
-                   id="email" 
-                   v-model="email" 
-                   required>
+            <label for="email">E-mail</label>
+            <input type="text" id="email" v-model="email" required>
           </div>
           
           <div class="form-group">
             <label for="password">Mot de passe</label>
-            <input type="password" 
-                   id="password" 
-                   v-model="password" 
-                   required>
+            <input type="password" id="password" v-model="password" required>
           </div>
           
           <p class="forgot-password">
@@ -30,19 +22,18 @@
           </p>
           
           <div class="action-buttons">
-              <router-link to="/login" class="login-button">SE CONNECTER</router-link>
-              <router-link to="/register" class="register-button">S'INSCRIRE</router-link>
+              <button type="submit" class="login-button">SE CONNECTER</button>
+              <router-link to="/inscription" class="register-button">S'INSCRIRE</router-link>
           </div>
-          
         </form>
-        
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import TheHeader from '@/components/TheHeader.vue';
+import TheHeader from '@/components/TheHeader.vue';
+
 export default {
   components: {
     TheHeader
@@ -54,12 +45,33 @@ export default {
     };
   },
   methods: {
-    handleLogin() {
-      // 🚨 LOGIQUE DE CONNEXION ICI
-      console.log('Tentative de connexion avec :', this.email, this.password);
-      
-      // Simuler une connexion réussie et rediriger
-      // this.$router.push('/'); 
+    async handleLogin() {
+      try {
+        const response = await fetch('http://localhost:8000/api_login.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            login: this.email,
+            password: this.password
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // 1. On stocke l'utilisateur
+          localStorage.setItem('user', JSON.stringify(result.user));
+          
+          // 2. ON FORCE LA REDIRECTION ET LE RECHARGEMENT
+          // C'est cette ligne qui va "réveiller" ton Header
+          window.location.href = '/'; 
+        } else {
+          alert(result.message || "Erreur de connexion");
+        }
+      } catch (error) {
+        console.error("Erreur:", error);
+        alert("Impossible de contacter le serveur.");
+      }
     }
   }
 }
@@ -226,5 +238,25 @@ font-family: 'Lora', serif;
   background-color: transparent;
   color: var(--primary-color);
   line-height: normal;
+}
+@media (max-width: 850px) {
+  .login-page-container {
+    flex-direction: column; /* L'image passe au dessus du formulaire */
+  }
+  .image-side {
+    width: 100%;
+    height: 30vh; /* L'image ne prend que le haut de l'écran */
+  }
+  .form-side {
+    width: 100%;
+    padding: 40px 0;
+  }
+  .form-side::before {
+    font-size: 150px; /* Réduction du caractère japonais de fond */
+    top: 50px;
+  }
+  .form-row {
+    flex-direction: column; /* Les champs Nom/Prénom s'empilent */
+  }
 }
 </style>

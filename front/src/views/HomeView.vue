@@ -15,77 +15,70 @@
     <section class="popular-section">
       <h2>POPULAIRE</h2>
       <div class="destination-cards-container">
-        
-        <div class="destination-card tokyo-card">
-          <div class="city-overlay">Tokyo</div>
-        </div>
-        <div class="destination-card kyoto-card">
-          <div class="city-overlay">Kyoto</div>
-        </div>
-        <div class="destination-card okinawa-card">
-          <div class="city-overlay">Okinawa</div>
-        </div>
-        
+        <card 
+          v-for="excursion in excursions" 
+          :key="excursion.id"
+          :id="excursion.id"
+          :name="excursion.nom" 
+          :image="`/img/${excursion.image}`" 
+        />
       </div>
     </section>
     
     <section class="autumn-offers-section">
       <h2>Les Offres du moment</h2>
-      <cardevent />
+      <div class="destination-cards-container">
+        <cardevent 
+          v-for="offre in eventsFromDB" 
+          :key="offre.id"
+          :event="offre" 
+        />
+      </div>
     </section>
   </div>
 </template>
 
 <script>
-import { voyages } from '../data.js'; // ✅ Importation du tableau de données centralisé
-import card from '../components/card.vue';
-import cardevent from '../components/cardevent.vue';
+import { ref, onMounted } from 'vue';
+import Card from '../components/card.vue';
+import Cardevent from '../components/cardevent.vue';
 import TheHeader from '@/components/TheHeader.vue';
 
 export default {
   components: {
-    cardevent,
+    Card,
+    Cardevent,
     TheHeader
   },
-  data() {
-    return {
-      voyage: {} // L'objet voyage sera rempli au chargement
+  setup() {
+    const excursions = ref([]);
+    const eventsFromDB = ref([]);
+
+    // On crée une fonction globale de chargement
+    const loadData = async () => {
+      try {
+        // 1. On récupère les excursions normales
+        const responseExcu = await fetch('http://localhost:8000/api_excursion.php'); 
+        excursions.value = await responseExcu.json();
+
+        // 2. On récupère les offres (via la nouvelle API)
+        const responseOffres = await fetch('http://localhost:8000/api_offre.php');
+        eventsFromDB.value = await responseOffres.json();
+
+        console.log("Excursions chargées :", excursions.value);
+        console.log("Offres chargées :", eventsFromDB.value);
+      } catch (error) {
+        console.error("Erreur lors du chargement des données :", error);
+      }
     };
-  },
-  
-  // Utilise un watcher pour charger les données à l'ouverture de la page et si l'ID change
-  watch: {
-    '$route.params.id': {
-      immediate: true, 
-      handler() {
-        this.loadVoyageData();
-      }
-    }
-  },
 
-  methods: {
-    loadVoyageData() {
-      // Récupère l'ID depuis l'URL et le convertit en nombre
-      const voyageId = parseInt(this.$route.params.id);
-      
-      // Recherche l'objet dans le tableau de données
-      const foundVoyage = voyages.find(v => v.id === voyageId);
+    // On lance le chargement au montage du composant
+    onMounted(loadData);
 
-      if (foundVoyage) {
-        this.voyage = foundVoyage;
-      } else {
-        this.voyage = {}; // Vide l'objet pour afficher le message de non-trouvé
-      }
-    },
-    
-    // Méthode pour formater le prix en Euro
-    formatCurrency(value) {
-      return new Intl.NumberFormat('fr-FR', {
-        style: 'currency',
-        currency: 'EUR',
-        minimumFractionDigits: 0
-      }).format(value);
-    }
+    return {
+      excursions,
+      eventsFromDB
+    };
   }
 }
 </script>
@@ -347,32 +340,38 @@ export default {
 }
 
 
-/* ------------------ BOUTON FLEUR (CORRIGÉ ET REPOSITIONNÉ) ------------------ */
+/* ------------------ BOUTON FLEUR (CENTRAGE ABSOLU) ------------------ */
 
 .carte-button-wrapper {
+
+  width: clamp(100px, 12vw, 180px); 
+  height: clamp(100px, 12vw, 180px);
   
-  width: 150px; 
-  height: 150px;
-  /* POSITIONNEMENT CRUCIAL POUR LE CHEVAUCHEMENT */
   position: absolute;
-  top: 83%; 
-  left: 50%;
-  transform: translateX(-50%); /* Centre horizontalement */
+
+  bottom: 0;
+  left: 49.5%;
+
+  transform: translate(-50%, 50%); 
+  
   z-index: 30;
+  transition: all 0.3s ease; /* Transition douce pour le redimensionnement */
 }
+
 .carte-fleur-image {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    display: block;
 }
 
 .carte-text {
   position: absolute;
   color: white; 
   font-weight: bold;
-  font-size: 1.1em;
+  /* Taille du texte qui s'adapte aussi un peu */
+  font-size: clamp(0.8em, 1vw, 1.1em);
   pointer-events: none;
-  /* ✅ AJOUT DU CENTRAGE POUR LE TEXTE DE LA FLEUR */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); 
@@ -464,12 +463,14 @@ export default {
     height: 300px;
   }
   
-  /* ❌ SUPPRIMÉ : Suppression de la classe .site-logo-center-image non utilisée */
+  
   
   .carte-button-wrapper {
       width: 150px; /* Taille ajustée pour le mobile */
       height: 150px;
       top: 85%; /* Ajustement mobile du bouton */
+      bottom: -10px; 
+      transform: translate(-50%, 50%);
   }
 
   .destination-cards-container {

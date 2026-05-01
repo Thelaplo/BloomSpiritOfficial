@@ -11,7 +11,7 @@
     {
         try{
         $transport = array();
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="SELECT * FROM TypeTransport";
         $requete=$cnx->prepare($reqChaine);
         $result=$requete->execute();
@@ -34,7 +34,7 @@
     public static function SelectTransportByIdExcursion(int $id) : array
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="SELECT * FROM TypeTransport TT INNER JOIN TRANSPORTER TR ON TT.id = TR.idTypeTransport WHERE TR.idExcursion = :id";
 
         $requete=$cnx->prepare($reqChaine);
@@ -57,7 +57,7 @@
     public static function SelectById(string $id) : TypeTransport
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="SELECT * FROM TypeTransport WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$id,PDO::PARAM_STR);
@@ -81,7 +81,7 @@
     public static function DeleteById(string $id) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="DELETE FROM TypeTransport WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$id,PDO::PARAM_STR);
@@ -97,7 +97,7 @@
     public static function Update(TypeTransport $TypeTransport) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="UPDATE TypeTransport SET id = :id, lib = :lib WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$TypeTransport->GetId(),PDO::PARAM_STR);
@@ -114,7 +114,7 @@
     public static function Insert(TypeTransport $TypeTransport) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="INSERT INTO TypeTransport VALUES (:id,:lib)";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$TypeTransport->GetId(),PDO::PARAM_STR);

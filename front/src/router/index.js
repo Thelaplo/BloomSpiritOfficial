@@ -1,10 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import HomeView from '../views/HomeView.vue'
-
 import CarteView from '../views/CarteView.vue'
 import DetailView from '../views/DetailView.vue'
-
 import LoginView from '../views/LoginView.vue'
 import InscriptionView from '@/views/InscriptionView.vue'
 import CRUDView from '../views/CRUDView.vue'
@@ -44,7 +42,14 @@ const router = createRouter({
       path: '/inscription', 
       name: 'inscription', 
       component: InscriptionView
+    },
+    {
+      path: '/profil',
+      name: 'Profil',
+      component: () => import('@/views/ProfilView.vue')
     }
+
+
   ]
 })
 

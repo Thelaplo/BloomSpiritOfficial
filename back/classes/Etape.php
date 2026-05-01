@@ -40,7 +40,7 @@ class Etape
         return $this->lieu;
     }
 
-    public function GetHebergement() : Lieu
+    public function GetHebergement() : Hebergement
     {
         return $this->hebergement;
     }

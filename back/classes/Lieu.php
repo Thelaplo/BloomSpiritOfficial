@@ -7,18 +7,16 @@ class Lieu
     private string $desc;
     private float $latitude;
     private float $longitude;
-    private float $note;
     private string $img;
     private TypeLieu $type;
 
-    public function __construct(int $id, string $nom, string $desc, float $latitude, float $longitude, float $note, string $img, TypeLieu $type)
+    public function __construct(int $id, string $nom, string $desc, float $latitude, float $longitude, string $img, TypeLieu $type)
     {
         $this->id = $id;
         $this->nom = $nom;
         $this->desc = $desc;
         $this->latitude = $latitude;
         $this->longitude = $longitude;
-        $this->note = $note;
         $this->img = $img;
         $this->type = $type;
     }
@@ -46,11 +44,6 @@ class Lieu
     public function GetLongitude() : float
     {
         return $this->longitude;
-    }
-
-    public function GetNote() : float
-    {
-        return $this->note;
     }
 
     public function GetImg() : string
@@ -88,10 +81,6 @@ class Lieu
         $this->longitude = $longitude;
     }
 
-    public function SetNote(float $note) : void
-    {
-        $this->note = $note;
-    }
 
     public function SetImg(string $img) : void
     {

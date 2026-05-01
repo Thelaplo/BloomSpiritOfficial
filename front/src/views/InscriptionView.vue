@@ -1,5 +1,6 @@
 <template>
   <div class="login-page-container">
+    <TheHeader />
     <div class="image-side"></div>
     
     <div class="form-side">
@@ -60,22 +61,52 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
+<script>
+// On importe le Header
+import TheHeader from '@/components/TheHeader.vue';
 
-const form = ref({
-  civilite: 'Mme',
-  firstname: '',
-  lastname: '',
-  email: '',
-  password: '',
-  birthdate: '2000-01-01'
-});
-
-const handleRegister = () => {
-  console.log('Données d\'inscription :', form.value);
-  // Ici tu ajouteras ton appel API plus tard
-};
+export default {
+  name: 'InscriptionView',
+  // On déclare le composant ici
+  components: {
+    TheHeader
+  },
+  data() {
+    return {
+      form: {
+        civilite: 'Mme',
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        birthdate: '2000-01-01',
+        mobile: ''
+      }
+    };
+  },
+  methods: {
+    async handleRegister() {
+      try {
+        const response = await fetch('http://localhost:8000/api_register.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(this.form)
+        });
+        
+        const result = await response.json();
+        if (result.success) {
+          alert("Compte créé avec succès !");
+          this.$router.push('/login');
+        } else {
+          alert("Erreur : " + result.message);
+        }
+      } catch (error) {
+        console.error("Erreur technique :", error);
+        alert("Impossible de contacter le serveur");
+      }
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -249,5 +280,25 @@ font-family: 'Lora', serif;
   cursor: pointer;
   font-weight: 400;       /* Moins gras que le titre du groupe */
   font-style: normal;
+}
+@media (max-width: 850px) {
+  .login-page-container {
+    flex-direction: column; /* L'image passe au dessus du formulaire */
+  }
+  .image-side {
+    width: 100%;
+    height: 30vh; /* L'image ne prend que le haut de l'écran */
+  }
+  .form-side {
+    width: 100%;
+    padding: 40px 0;
+  }
+  .form-side::before {
+    font-size: 150px; /* Réduction du caractère japonais de fond */
+    top: 50px;
+  }
+  .form-row {
+    flex-direction: column; /* Les champs Nom/Prénom s'empilent */
+  }
 }
 </style>

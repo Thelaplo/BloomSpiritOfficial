@@ -10,7 +10,7 @@
     {
         try{
         $typeLieu = array();
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="SELECT * FROM TypeLieu";
         $requete=$cnx->prepare($reqChaine);
         $result=$requete->execute();
@@ -33,7 +33,7 @@
     public static function SelectById(string $id) : TypeLieu
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="SELECT * FROM TypeLieu WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$id,PDO::PARAM_STR);
@@ -56,7 +56,7 @@
     public static function DeleteById(string $id) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="DELETE FROM TypeLieu WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$id,PDO::PARAM_STR);
@@ -72,7 +72,7 @@
     public static function Update(TypeLieu $typeLieu) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="UPDATE TypeLieu SET id = :id, lib = :lib WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$typeLieu->GetId(),PDO::PARAM_STR);
@@ -89,7 +89,7 @@
     public static function Insert(TypeLieu $typeLieu) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="INSERT INTO TypeLieu VALUES (:id,:lib)";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$typeLieu->GetId(),PDO::PARAM_STR);

@@ -2,31 +2,26 @@
   <div id="bloom-spirit-site">
     <header class="hero-section">
       <div class="static-hero-container">
-        
         <CarteJapon class="hero-map-overlay" />
         
-        <div class="search-bar-wrapper">
-          </div>
-        <div class="header-top-bar">
-          </div>
         <div class="search-bar-wrapper">
           <input 
             type="text" 
             placeholder="ville, thème, distance..." 
             class="search-input"
             v-model="searchQuery"
-            @keyup.enter="filterVoyages"
           />
-          <button class="search-button" @click="filterVoyages">
+          <button class="search-button">
             <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
               <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
             </svg>
           </button>
         </div>
+
         <TheHeader/>
-        
       </div>
     </header>
+
     <section class="filters-and-title-section">
       <div class="filters-row">
         <h2 class="section-logo">Bloom Spirit</h2>
@@ -40,6 +35,7 @@
                 <option value="200km">Moins de 200 km</option>
             </select>
         </div>
+
         <div class="filter-group">
           <label for="options">Options</label>
           <select id="options" class="filter-select" v-model="filters.options">
@@ -48,6 +44,7 @@
             <option value="Nature">Nature</option>
           </select>
         </div>
+
         <div class="filter-group">
           <label for="thematique">Thématique</label>
           <select id="thematique" class="filter-select" v-model="filters.theme">
@@ -67,7 +64,6 @@
 
     <section class="travel-grid-section">
       <div class="travel-grid">
-        
         <TravelCard 
           v-for="voyage in filteredVoyages" 
           :key="voyage.id" 
@@ -75,83 +71,111 @@
         />
         
         <p v-if="filteredVoyages.length === 0" class="no-results-message" style="grid-column: 1 / -1; text-align: center;">
-          Aucun voyage ne correspond à vos critères de recherche. Veuillez ajuster vos filtres.
+          Aucun voyage ne correspond à vos critères de recherche.
         </p>
-
       </div>
     </section>
-
   </div>
 </template>
+
 <script>
-import { voyages } from '../data.js'; // ✅ Import du tableau de données centralisé
-import TravelCard from '../components/travelcard.vue'; 
+import { ref, computed, onMounted } from 'vue';
 import CarteJapon from '../components/CarteJapon.vue';
+import TravelCard from '../components/travelcard.vue'; 
 import TheHeader from '@/components/TheHeader.vue';
 
 export default {
   components: {
-    TravelCard,
     CarteJapon,
+    TravelCard,
     TheHeader
   },
-  data() {
-    return {
-      searchQuery: '',
-      filters: {
-        distance: '', 
-        options: '',
-        theme: '',
-      },
-      voyages: voyages // ✅ Utilisation des données importées
-    };
-  },
-  
-  computed: {
-    filteredVoyages() {
-      const query = this.searchQuery.toLowerCase().trim();
-      
-      return this.voyages.filter(voyage => {
-        let match = true;
-        
-        // 1. Recherche dans la barre (Titre, Thème, Option)
-        if (query.length > 0) {
-          const searchTargets = [voyage.title, voyage.theme, voyage.options].join(' ').toLowerCase();
-          if (!searchTargets.includes(query)) {
-            match = false;
-          }
-        }
-        
-        // 2. FILTRE DISTANCE
-        if (this.filters.distance) {
-            const maxDistance = parseInt(this.filters.distance.replace('km', ''));
-            if (voyage.distance_km > maxDistance) {
-                match = false;
-            }
-        }
-        
-        // 3. Filtre Options
-        if (this.filters.options && voyage.options !== this.filters.options) {
-          match = false;
-        }
-        
-        // 4. Filtre Thématique
-        if (this.filters.theme && voyage.theme !== this.filters.theme) {
-          match = false;
-        }
+  setup() {
+    const searchQuery = ref('');
+    const voyages = ref([]);
+    
+    // Déclaration de l'objet filters pour tes sélecteurs
+    const filters = ref({
+      distance: '',
+      options: '',
+      theme: ''
+    });
 
-        return match;
+    const loadVoyages = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/get_excursions.php');
+        const data = await response.json();
+        
+        // On prépare l'objet pour qu'il corresponde aux attentes de travelcard.vue
+        voyages.value = data.map(v => ({
+          id: v.id,
+          title: v.nom,
+          imageUrl: `/img/${v.image}`,
+          price: v.prix,
+          duration: v.duree || 7, // On utilise la colonne duree de MySQL
+          idCat: v.idCat,
+          commentaire: v.commentaire
+        }));
+      } catch (error) {
+        console.error("Erreur de chargement des voyages:", error);
+      }
+    };
+
+    onMounted(loadVoyages);
+
+    const filteredVoyages = computed(() => {
+      return voyages.value.filter(voyage => {
+        // 1. Recherche par texte (déjà présent)
+        const matchesSearch = voyage.title.toLowerCase().includes(searchQuery.value.toLowerCase());
+
+        // 2. Filtre Options (en dur par ID ou Nom)
+        const matchesOption = !filters.value.options || 
+                            (filters.value.options === 'Culturel' && [1, 4, 7].includes(voyage.id)) || 
+                            (filters.value.options === 'Nature' && [2, 3, 5, 6, 8].includes(voyage.id));
+
+        // 3. Filtre Thématique (en dur par mot-clé)
+        const themesMap = {
+          'Temple': ['Torii Miyajima', 'Nara', 'Taikodani Inari-jinja'],
+          'Montagne': ['Shirakawa-go', 'Alpes Japonaises'],
+          'Plage': ['Miyako-jima', 'Kumejima']
+        };
+        const matchesTheme = !filters.value.theme || 
+                            (themesMap[filters.value.theme] && themesMap[filters.value.theme].includes(voyage.title));
+
+        // 4. Filtre Distance (en dur pour la démo)
+        const matchesDistance = !filters.value.distance || 
+                              (filters.value.distance === '50km' && [4, 1].includes(voyage.id)) ||
+                              (filters.value.distance === '100km') || // On laisse passer pour la démo
+                              (filters.value.distance === '200km');
+
+        return matchesSearch && matchesOption && matchesTheme && matchesDistance;
       });
-    }
-  },
-  
-  methods: {
-    filterVoyages() {
-      console.log('Filtrage des voyages en cours...');
-    }
+    });
+
+    return {
+      searchQuery,
+      filters,
+      filteredVoyages
+    };
   }
-}
+};
 </script>
+
+<style scoped>
+/* Ajoute ici tes styles existants ou garde ceux que tu avais */
+.travel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 20px;
+}
+.no-results {
+  text-align: center;
+  padding: 50px;
+  font-style: italic;
+  color: #666;
+}
+</style>
 <style scoped>
   /* À mettre en dehors du "scoped" si possible, ou dans App.vue */
 html, body {
@@ -207,7 +231,7 @@ html, body {
   display: flex;
   align-items: center;
   box-shadow: var(--shadow-subtle);
-  
+  left:0%;
   /* Largeur contrôlée */
   width: 90%; 
   max-width: 500px; 
@@ -338,22 +362,24 @@ html, body {
 }
 
 @media (max-width: 768px) {
-  .travel-grid {
-    grid-template-columns: repeat(2, 1fr); 
-  }
-  
   .filters-row {
-      justify-content: center;
+    height: auto; /* Hauteur automatique pour contenir les filtres empilés */
+    flex-direction: column;
+    padding: 20px;
+    margin-top: -30px;
   }
-  
   .filter-group {
-      margin: 5px 10px;
+    margin: 10px 0;
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
   }
-  
-  .section-logo {
-      width: 100%;
-      text-align: center;
-      margin: 0 0 10px 0;
+  .filter-select {
+    width: 60%;
+  }
+  .search-bar-wrapper {
+    width: 95%;
+    top: 10%;
   }
 }
 

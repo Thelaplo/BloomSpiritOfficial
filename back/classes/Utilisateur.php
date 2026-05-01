@@ -4,13 +4,13 @@ class Utilisateur
 {
     private string $login;
     private string $mdp;
-    private bool $IsAdmin;
+    private bool $isAdmin;
 
     function __construct(string $login, string $mdp, bool $IsAdmin)
     {
         $this->login = $login;
         $this->mdp = $mdp;
-        $this->IsAdmin = $IsAdmin;
+        $this->isAdmin = $IsAdmin;
     }
 
     public function GetLogin() : string
@@ -25,7 +25,7 @@ class Utilisateur
 
     public function GetIsAdmin():bool
     {
-        return $this->IsAdmin;
+        return $this->isAdmin;
     }
 }
 

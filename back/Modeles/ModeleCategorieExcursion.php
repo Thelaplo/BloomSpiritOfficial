@@ -10,7 +10,7 @@
     {
         try{
             $catExcursion = array();
-            $cnx=connexpdo('bdExcursion','myparam');
+            $cnx=connexpdo('gestion_excursions','myparam');
             $reqChaine="SELECT * FROM Categorie";
             $requete=$cnx->prepare($reqChaine);
             $result=$requete->execute();
@@ -34,7 +34,7 @@
     public static function SelectById(string $id) : CategorieExcursion
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="SELECT * FROM Categorie WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$id,PDO::PARAM_STR);
@@ -57,7 +57,7 @@
     public static function DeleteById(string $id) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="DELETE FROM Categorie WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$id,PDO::PARAM_STR);
@@ -73,7 +73,7 @@
     public static function Update(CategorieExcusion $catExcursion) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="UPDATE Categorie SET id = :id, lib = :lib WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$catExcursion->GetId(),PDO::PARAM_STR);
@@ -90,7 +90,7 @@
     public static function Insert(CategorieExcusion $catExcursion) : void
     {
         try{
-        $cnx=connexpdo('bdExcursion','myparam');
+        $cnx=connexpdo('gestion_excursions','myparam');
         $reqChaine="INSERT INTO Categorie VALUES (:id,:lib)";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$catExcursion->GetId(),PDO::PARAM_STR);
