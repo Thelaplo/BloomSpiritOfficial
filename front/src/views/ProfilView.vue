@@ -83,7 +83,7 @@ export default {
     async loadFavorites() {
       if (!this.user.login) return;
       try {
-        const response = await fetch(`http://localhost:8000/api_get_favoris.php?login=${this.user.login}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api_get_favoris.php?login=${this.user.login}`);
         this.favorites = await response.json();
       } catch (e) { console.error(e); }
     },
@@ -94,7 +94,7 @@ export default {
       alert("Profil mis à jour !");
     },
     async removeFav(id) {
-      await fetch('http://localhost:8000/api_toggle_favoris.php', {
+      await fetch(`${import.meta.env.VITE_API_URL}/api_toggle_favoris.php`, {
         method: 'POST',
         body: JSON.stringify({ login: this.user.login, idExcursion: id })
       });

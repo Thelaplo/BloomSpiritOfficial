@@ -103,7 +103,7 @@ export default {
 
     const loadVoyages = async () => {
       try {
-        const response = await fetch('http://localhost:8000/get_excursions.php');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/get_excursions.php`);
         const data = await response.json();
         
         // On prépare l'objet pour qu'il corresponde aux attentes de travelcard.vue

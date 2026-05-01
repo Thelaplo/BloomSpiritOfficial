@@ -58,11 +58,11 @@ export default {
     const loadData = async () => {
       try {
         // 1. On récupère les excursions normales
-        const responseExcu = await fetch('http://localhost:8000/api_excursion.php'); 
+        const responseExcu = await fetch(`${import.meta.env.VITE_API_URL}/api_excursion.php`);
         excursions.value = await responseExcu.json();
 
         // 2. On récupère les offres (via la nouvelle API)
-        const responseOffres = await fetch('http://localhost:8000/api_offre.php');
+        const responseOffres = await fetch(`${import.meta.env.VITE_API_URL}/api_offre.php`);
         eventsFromDB.value = await responseOffres.json();
 
         console.log("Excursions chargées :", excursions.value);

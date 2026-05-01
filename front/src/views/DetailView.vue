@@ -97,7 +97,7 @@ export default {
  methods: {
     async loadExcursion(id) {
       try {
-        const response = await fetch(`http://localhost:8000/api_detail.php?id=${id}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api_detail.php?id=${id}`);
         this.excursion = await response.json();
 
         const userData = JSON.parse(localStorage.getItem('user'));
@@ -164,7 +164,7 @@ export default {
       };
 
       try {
-        const response = await fetch('http://localhost:8000/api_toggle_favoris.php', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api_toggle_favoris.php`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -188,7 +188,7 @@ export default {
     async checkIfFavorite(login, idExcursion) {
     // Tu peux créer une petite API api_check_favoris.php ou utiliser toggle avec un mode "check"
     // Pour l'instant, on peut aussi le faire via une requête simple
-        const response = await fetch(`http://localhost:8000/api_check_favoris.php?login=${login}&idExcursion=${idExcursion}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}api_check_favoris.php?login=${login}&idExcursion=${idExcursion}`);
         const result = await response.json();
         this.isFavorite = result.isFavorite;
     }

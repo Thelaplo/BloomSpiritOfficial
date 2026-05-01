@@ -214,7 +214,7 @@ const topFavorites = ref([]);
 
 const fetchStats = async () => {
   try {
-    const response = await fetch('http://localhost:8000/api_admin_stats.php');
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api_admin_stats.php`);
     const data = await response.json();
     usersCount.value = data.usersCount;
     totalFavoritesCount.value = data.totalFavorites;
@@ -241,7 +241,7 @@ const searchQuery = ref('');
 // 1. Charger les données depuis la DB
 const fetchExcursions = async () => {
   try {
-    const response = await fetch('http://localhost:8000/api_admin_excursions.php');
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api_admin_excursions.php`);
     allExcursions.value = await response.json();
   } catch (error) {
     console.error("Erreur chargement admin :", error);
@@ -278,7 +278,7 @@ const newExcursion = ref({
 
 const handleCreate = async () => {
   try {
-    const response = await fetch('http://localhost:8000/api_create_excursion.php', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api_create_excursion.php`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newExcursion.value)
@@ -330,7 +330,7 @@ const users = ref([]);
 
 const showUsers = async () => {
   currentSection.value = 'utilisateurs';
-  const response = await fetch('http://localhost:8000/api_admin_users.php');
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api_admin_users.php`);
   users.value = await response.json();
 };
 onMounted(fetchExcursions);
