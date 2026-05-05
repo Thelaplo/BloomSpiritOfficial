@@ -6,7 +6,7 @@ class ModeleUtilisateur {
     public static function SelectAll() : array 
     {
         include_once('./connexpdo.inc.php');
-        $cnx=connexpdo('gestion_excursions"','myparam');
+        $cnx=connexpdo('if0_41488430_gestion_excursions"','myparam');
         $reqChaine="SELECT * FROM Avis";
         $requete=$cnx->prepare($reqChaine);
         $result=$requete->execute();
@@ -29,7 +29,7 @@ class ModeleUtilisateur {
     public static function SelectByIdAndNumero(int $id, int $numero): array
     {
         include_once('./connexpdo.inc.php');
-        $cnx=connexpdo('gestion_excursions','myparam');
+        $cnx=connexpdo('if0_41488430_gestion_excursions','myparam');
         $reqChaine="SELECT * FROM Avis A INNER JOIN Excursion E ON A.id = E.id WHERE E.idExcursion = :id AND E.numero = :numero";
         $requete=$cnx->prepare($reqChaine);
         $result=$requete->execute();
@@ -52,7 +52,7 @@ class ModeleUtilisateur {
     public static function SelectByIdExcursion(int $id): array
     {
         include_once('./connexpdo.inc.php');
-        $cnx=connexpdo('gestion_excursions','myparam');
+        $cnx=connexpdo('if0_41488430_gestion_excursions','myparam');
         $reqChaine="SELECT * FROM Avis A INNER JOIN Excursion E ON A.id = E.id WHERE E.idExcursion = :id";
         $requete=$cnx->prepare($reqChaine);
         $result=$requete->execute();
@@ -75,7 +75,7 @@ class ModeleUtilisateur {
     public static function SelectByIdUtilisateur(int $id): array
     {
         include_once('./connexpdo.inc.php');
-        $cnx=connexpdo('gestion_excursions','myparam');
+        $cnx=connexpdo('if0_41488430_gestion_excursions','myparam');
         $reqChaine="SELECT * FROM Avis A INNER JOIN Utilisateur U ON A.id = U.id WHERE U.idUtilisateur = :id";
         $requete=$cnx->prepare($reqChaine);
         $result=$requete->execute();
@@ -98,7 +98,7 @@ class ModeleUtilisateur {
     public static function DeleteByIdAndNumero(int $id, int $numero) : void
     {
         include_once('./connexpdo.inc.php');
-        $cnx=connexpdo('gestion_excursions','myparam');
+        $cnx=connexpdo('if0_41488430_gestion_excursions','myparam');
         $reqChaine="DELETE FROM Avis WHERE id = :id AND numero = :numero";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(":id",$id,PDO::PARAM_INT);
@@ -111,7 +111,7 @@ class ModeleUtilisateur {
     public static function Update(Avis $avis) : void
     {
         include_once('./connexpdo.inc.php');
-        $cnx=connexpdo('gestion_excursions','myparam');
+        $cnx=connexpdo('if0_41488430_gestion_excursions','myparam');
         $reqChaine="UPDATE Avis SET numero = :numero, login = :login, idExcursion = :idExcursion, contenu = :contenu, note = :note WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(":numero", $avis->GetNumero(), PDO::PARAM_INT);
@@ -127,7 +127,7 @@ class ModeleUtilisateur {
     public static function Insert(Avis $avis) :void 
     {
         include_once('./connexpdo.inc.php');
-        $cnx=connexpdo('gestion_excursions','myparam');
+        $cnx=connexpdo('if0_41488430_gestion_excursions','myparam');
         $reqChaine="INSERT INTO Avis VALUES(:numero, :login, :idExcursion, :contenu, :note)";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(":numero", $avis->GetNumero(), PDO::PARAM_INT);

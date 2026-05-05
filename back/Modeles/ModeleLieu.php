@@ -10,7 +10,7 @@
     {
         try{
         $lieu = array();
-        $cnx=connexpdo('gestion_excursions','myparam');
+        $cnx=connexpdo('if0_41488430_gestion_excursions','myparam');
         $reqChaine="SELECT * FROM Lieu";
         $requete=$cnx->prepare($reqChaine);
         $result=$requete->execute();
@@ -38,7 +38,7 @@
     public static function SelectById(string $id) : Lieu
     {
         try{
-        $cnx=connexpdo('gestion_excursions','myparam');
+        $cnx=connexpdo('if0_41488430_gestion_excursions','myparam');
         $reqChaine="SELECT * FROM Lieu WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$id,PDO::PARAM_STR);
@@ -66,7 +66,7 @@
     public static function SelectByIdEtape(int $id, int $id2) : array
     {
         try{
-        $cnx=connexpdo('gestion_excursions','myparam');
+        $cnx=connexpdo('if0_41488430_gestion_excursions','myparam');
         $reqChaine="SELECT * FROM Lieu LI INNER JOIN ETAPE ET ON ET.idLieu = LI.id WHERE ET.idExcursion = :id AND ET.numOrdre = :id2";
         $requete=$cnx->prepare($reqChaine);
         $requete->bindParam(":id",$id,PDO::PARAM_INT);
@@ -92,7 +92,7 @@
     public static function DeleteById(int $id) : void
     {
         try{
-        $cnx=connexpdo('gestion_excursions','myparam');
+        $cnx=connexpdo('if0_41488430_gestion_excursions','myparam');
         $reqChaine="DELETE FROM Lieu WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$id,PDO::PARAM_STR);
@@ -108,7 +108,7 @@
     public static function Update(Lieu $lieu) : void
     {
         try{
-        $cnx=connexpdo('gestion_excursions','myparam');
+        $cnx=connexpdo('if0_41488430_gestion_excursions','myparam');
         $reqChaine="UPDATE Lieu SET id = :id, nom = :lib, commentaire = :com, latitude = CONVERT(:lat, DECIMAL), longitude = CONVERT(:long, DECIMAL), note = CONVERT(:note, DECIMAL), image = :img, idTypeLieu = :idTypeLieu WHERE id = :id";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$lieu->GetId(),PDO::PARAM_INT);
@@ -131,7 +131,7 @@
     public static function Insert(Lieu $lieu) : void
     {
         try{
-        $cnx=connexpdo('gestion_excursions','myparam');
+        $cnx=connexpdo('if0_41488430_gestion_excursions','myparam');
         $reqChaine="INSERT INTO Lieu VALUES (:id, :lib, :com, CONVERT(:lat, DECIMAL), CONVERT(:long, DECIMAL), CONVERT(:note, DECIMAL), :img, :idTypeLieu)";
         $requete=$cnx->prepare($reqChaine);
         $requete->BindParam(':id',$lieu->GetId(),PDO::PARAM_INT);

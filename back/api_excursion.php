@@ -7,11 +7,8 @@ include_once('./modeles/ModeleExcursion.php');
 
 try {
     $all = ModeleExcursion::SelectAll();
-    
-    $populaires = array_slice($all, 0, 6); 
-
     $data = [];
-    foreach ($populaires as $excu) {
+    foreach (array_slice($all, 0, 6) as $excu) {
         $data[] = [
             "id"    => $excu->GetId(),
             "nom"   => $excu->GetNom(),
@@ -20,8 +17,8 @@ try {
             "duree" => $excu->GetDuree()
         ];
     }
+    ob_clean();
     echo json_encode($data);
 } catch (Exception $e) {
     echo json_encode(["error" => $e->getMessage()]);
 }
-?>

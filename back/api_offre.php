@@ -7,31 +7,24 @@ include_once('./modeles/ModeleExcursion.php');
 
 try {
     $all = ModeleExcursion::SelectAll();
-    $offres = [];
-
-    // On définit des types d'offres différents
     $typesOffres = [
         ["tag" => "Promotion", "badge" => "-15%", "promo" => "Réduction immédiate"],
-        ["tag" => "Exclusif", "badge" => "Activité", "promo" => "Pass Musées offert"],
-        ["tag" => "Transport", "badge" => "Inclus", "promo" => "Japan Rail Pass 7j"],
-        ["tag" => "Saison", "badge" => "Guide", "promo" => "Guide privé offert"]
+        ["tag" => "Exclusif", "badge" => "Activité", "promo" => "Pass Musées offert"]
     ];
-
-    // On prend les 4 premières excursions pour en faire des offres variées
+    $offres = [];
     foreach (array_slice($all, 0, 3) as $index => $excu) {
-        $offreInfo = $typesOffres[$index % count($typesOffres)]; // Alterne les types d'offres
-        
+        $info = $typesOffres[$index % count($typesOffres)];
         $offres[] = [
-            "id"    => $excu->GetId(),
+            "id" => $excu->GetId(),
             "title" => $excu->GetNom(),
             "image" => "/img/" . $excu->GetImage(),
-            "tag"   => $offreInfo["tag"],
-            "badge" => $offreInfo["badge"],
-            "promo" => $offreInfo["promo"]
+            "tag" => $info["tag"],
+            "badge" => $info["badge"],
+            "promo" => $info["promo"]
         ];
     }
+    ob_clean();
     echo json_encode($offres);
 } catch (Exception $e) {
     echo json_encode(["error" => $e->getMessage()]);
 }
-?>

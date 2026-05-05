@@ -4,9 +4,10 @@ header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=UTF-8");
 
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') exit;
+
 include_once('./modeles/ModeleFavoris.php');
 include_once('./connexpdo.inc.php');
-
 
 $data = json_decode(file_get_contents("php://input"), true);
 $login = $data['login'] ?? null;
@@ -14,13 +15,11 @@ $idExcu = $data['idExcursion'] ?? null;
 
 if ($login && $idExcu) {
     try {
-
+        ob_clean();
         if (ModeleFavoris::Exists($login, $idExcu)) {
-            // S'il existe, on le supprime
             ModeleFavoris::Delete($login, $idExcu);
             echo json_encode(["status" => "removed", "message" => "Retiré des favoris"]);
         } else {
-            // S'il n'existe pas, on l'ajoute
             ModeleFavoris::Insert($login, $idExcu);
             echo json_encode(["status" => "added", "message" => "Ajouté aux favoris"]);
         }
@@ -29,5 +28,6 @@ if ($login && $idExcu) {
         echo json_encode(["error" => $e->getMessage()]);
     }
 } else {
+    echo json_encode(["error" => "Données login ou idExcursion manquantes"]);
 }
 ?>

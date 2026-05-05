@@ -10,7 +10,7 @@
    public static function SelectAll() : array {
     try {
         $excursion = array();
-        $cnx = connexpdo('gestion_excursions', 'myparam'); 
+        $cnx = connexpdo('if0_41488430_gestion_excursions', 'myparam'); 
         $reqChaine = "SELECT * FROM Excursion";
         $requete = $cnx->prepare($reqChaine);
         $result = $requete->execute();
@@ -42,7 +42,7 @@
     public static function SelectById(string $id) : Excursion
 {
     try {
-        $cnx = connexpdo('gestion_excursions', 'myparam');
+        $cnx = connexpdo('if0_41488430_gestion_excursions', 'myparam');
         $reqChaine = "SELECT * FROM Excursion WHERE id = :id";
         $requete = $cnx->prepare($reqChaine);
         $requete->bindParam(':id', $id, PDO::PARAM_STR); 
@@ -85,7 +85,7 @@
     public static function DeleteById(int $id) : void
     {
         try{
-        $cnx = connexpdo('gestion_excursions','myparam');
+        $cnx = connexpdo('if0_41488430_gestion_excursions','myparam');
         $reqChaine = "DELETE FROM Excursion WHERE id = :id";
         $requete = $cnx->prepare($reqChaine);
         $requete->bindParam(':id', $id, PDO::PARAM_STR); // Correction typo bindParam
@@ -101,7 +101,7 @@
     public static function Insert(Excursion $excursion) : void
     {
         try {
-            $cnx = connexpdo('gestion_excursions', 'myparam');
+            $cnx = connexpdo('if0_41488430_gestion_excursions', 'myparam');
             // Correction : Ajout de la parenthèse fermante et de la colonne 'image' oubliée dans ton SQL
             $reqChaine = "INSERT INTO Excursion (id, nom, image, description, duree, difficulte, nbLimitPers, prix, idCat) 
                           VALUES (:id, :nom, :img, :com, :duree, :dif, :lim, :prix, :idCat)";
@@ -130,7 +130,7 @@
     public static function Update(Excursion $excursion) : void
     {
         try {
-            $cnx = connexpdo('gestion_excursions', 'myparam');
+            $cnx = connexpdo('if0_41488430_gestion_excursions', 'myparam');
             // Correction : Harmonisation des noms de paramètres (:lib -> :nom)
             $reqChaine = "UPDATE Excursion SET nom = :nom, image = :img, description = :com, duree = :duree, 
                           difficulte = :dif, nbLimitPers = :lim, prix = :prix, idCat = :idCat WHERE id = :id";
